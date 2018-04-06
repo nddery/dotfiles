@@ -66,7 +66,9 @@
     " }
 
     " Ruby {
+      Plug 'vim-ruby/vim-ruby'
       Plug 'tpope/vim-rails'
+      Plug 'tpope/vim-endwise'
     " }
 
     " HTML {
@@ -308,7 +310,7 @@
 
   " Tests {
     " default is: '\v(__tests__/.*|(spec|test))\.(js|jsx|coffee)$'
-    let g:test#javascript#jest#file_pattern = '.test.js'
+    " let g:test#javascript#jest#file_pattern = '.test.js'
     nmap <Leader>t :TestNearest<cr>
     nmap <Leader>T :TestFile<cr>
   " }

@@ -3,7 +3,7 @@
   "libs": [
     "browser",
     "jquery",
-    "underscore"
+    "lodash"
   ],
   "plugins": {
     "node": {},
