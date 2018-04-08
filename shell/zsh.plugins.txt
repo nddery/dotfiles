@@ -1,9 +1,6 @@
-# prompt
 mafredri/zsh-async
 sindresorhus/pure
-
 rupa/z
 garabik/grc
 zsh-users/zsh-completions
-zsh-users/zsh-autosuggestions
 zsh-users/zsh-syntax-highlighting
