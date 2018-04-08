@@ -4,6 +4,10 @@ eval "$(rbenv init -)"
 
 ulimit -S -n 2048
 
+autoload -U compinit && compinit
+zstyle ':completion:*' menu select=1 _complete _ignored _approximate # highlight current selection
+zstyle ':completion:*:functions' ignored-patterns '_*' # ignore completion functions
+
 alias vimenc="vim -u ~/.vimrc.encrypted -x"
 alias rmds="find . -name '*.DS_Store' -type f -delete"
 alias update_zsh_plugins="antibody bundle < ~/.zsh.plugins.txt > ~/.zsh.plugins.sh"
