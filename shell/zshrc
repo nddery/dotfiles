@@ -22,7 +22,7 @@ alias update_zsh_plugins="antibody bundle < ~/.zsh.plugins.txt > ~/.zsh.plugins.
 
 alias ctags="`brew --prefix`/bin/ctags"
 alias mkdir='mkdir -p'
-alias tmux='tmux -2'
+alias t='tmux'
 
 alias la='ls -la'
 alias ll='ls -l'
