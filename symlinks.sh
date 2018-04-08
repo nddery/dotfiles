@@ -48,6 +48,9 @@ main() {
   done
 
   # setup XDG config directory and configs
+  mkdir -p $HOME/.config/alacritty
+  link "$(pwd)/config/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
+
   mkdir -p $HOME/.config/nvim
   link "$(pwd)/config/nvim/init.vim" "$HOME/.config/nvim/init.vim"
 }
