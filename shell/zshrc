@@ -8,6 +8,14 @@ autoload -U compinit && compinit
 zstyle ':completion:*' menu select=1 _complete _ignored _approximate # highlight current selection
 zstyle ':completion:*:functions' ignored-patterns '_*' # ignore completion functions
 
+# bindkey "^S" beginning-of-line
+# bindkey "^E" end-of-line
+bindkey "^P" history-search-backward
+bindkey "^N" history-search-forward
+bindkey "^D" delete-char
+bindkey "^F" forward-char
+bindkey "^B" backward-char
+
 alias vimenc="vim -u ~/.vimrc.encrypted -x"
 alias rmds="find . -name '*.DS_Store' -type f -delete"
 alias update_zsh_plugins="antibody bundle < ~/.zsh.plugins.txt > ~/.zsh.plugins.sh"
