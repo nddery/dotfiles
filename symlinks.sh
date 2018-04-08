@@ -7,6 +7,7 @@ declare -a DOTFILES_TO_SYMLINK=(
 
   'shell/tmux.conf'
   'shell/zshrc'
+  'shell/zsh.plugins.txt'
 
   'git/git_template'
   'git/gitconfig'
