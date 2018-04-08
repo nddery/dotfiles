@@ -37,19 +37,6 @@ function movie_to_central() {
   ssh central@192.168.0.101 'sudo chmod -R 0777 /Data/Public/Movies/$FILE'
 }
 
-export SPACESHIP_CHAR_SYMBOL='\\\ '
-export SPACESHIP_PROMPT_ORDER=(
-  time          # Time stampts section
-  user          # Username section
-  dir           # Current directory section
-  git           # Git section (git_branch + git_status)
-  exec_time     # Execution time
-  line_sep      # Line break
-  jobs          # Background jobs indicator
-  exit_code     # Exit code section
-  char          # Prompt character
-)
-
 export EDITOR=nvim
 export VISUAL=nvim
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
