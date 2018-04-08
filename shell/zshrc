@@ -28,6 +28,14 @@ alias gch='git checkout'
 alias gl='git log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short'
 alias yesterday="git log --since '1 day ago' --oneline --author nddery@gmail.com"
 
+function change_color_scheme () {
+  sed \
+    --in-place \
+    --follow-symlinks \
+    '/colors:\ \*/c\colors:\ \*'$1 \
+    $HOME/.config/alacritty/alacritty.yml
+}
+
 function clean_vim_directories() {
   rm -rf ~/.vimbackup/*
   rm -rf ~/.vimswap/*
