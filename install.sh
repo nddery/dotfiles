@@ -40,17 +40,6 @@ fi
 
 ###
 
-ask_for_confirmation 'Install/Update Zsh ?'
-printf '\n'
-
-if answer_is_yes; then
-  print_info 'Install/Update Zsh'
-  ./installs/zsh.sh
-  print_in_green '\n  ---\n\n'
-fi
-
-###
-
 ask_for_confirmation 'Install/Update brew packages ?'
 printf '\n'
 
@@ -101,6 +90,17 @@ printf '\n'
 if answer_is_yes; then
   print_info 'Symlink dotfiles into place'
   ./symlinks.sh
+  print_in_green '\n  ---\n\n'
+fi
+
+###
+
+ask_for_confirmation 'Change shell ?'
+printf '\n'
+
+if answer_is_yes; then
+  print_info 'Changing shell'
+  ./installs/shell.sh
   print_in_green '\n  ---\n\n'
 fi
 

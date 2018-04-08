@@ -1,35 +1,20 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+source ~/.zsh.plugins.sh
+[ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
+eval "$(rbenv init -)"
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-ZSH_THEME="honukai"
+ulimit -S -n 2048
 
-# Auto start tmux
-ZSH_TMUX_AUTOSTART=true
+alias vimenc="vim -u ~/.vimrc.encrypted -x"
+alias rmds="find . -name '*.DS_Store' -type f -delete"
+alias update_zsh_plugins="antibody bundle < ~/.zsh.plugins.txt > ~/.zsh.plugins.sh"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(tmux gitfast zsh-syntax-highlighting yarn brew z)
-
-source $ZSH/oh-my-zsh.sh
-
-# Force mkdir to create intermediate dirs
+alias ctags="`brew --prefix`/bin/ctags"
 alias mkdir='mkdir -p'
-
-# Stop auto correcting good commands!
-alias vagrant='nocorrect vagrant'
-
-# Force tmux to work with 256 colors.
 alias tmux='tmux -2'
 
-# Archiving
-alias tarbz2='tar -jcvf'
-alias targz='tar -zcvf'
-alias untarbz2='tar -jxvf'
-alias untargz='tar -zxvf'
+alias la='ls -la'
+alias ll='ls -l'
 
-# Git
 alias gti='git'
 alias gs='git status'
 alias gc='git commit'
@@ -39,74 +24,35 @@ alias gch='git checkout'
 alias gl='git log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short'
 alias yesterday="git log --since '1 day ago' --oneline --author nddery@gmail.com"
 
-# Vim
-# Start VIM in "encrypted" mode
-alias vimenc="vim -u ~/.vimrc.encrypted -x"
-
-# Update Brew packages (all)
-alias brewUpdateAll="brew update --all && brew upgrade `brew outdated` && brew cleanup && brew cask cleanup"
-
-# Let's go to nom!
-alias nom='npm'
-
-# exuberant ctags ftw
-alias ctags="`brew --prefix`/bin/ctags"
-
-# Remove those pesky .DS_Store files.
-alias rmds="find . -name '*.DS_Store' -type f -delete"
-
-# Install gems in the <cwd>/.bundle/ directory
-alias bi="bundle install --path=.bundle"
-
-# .mov to animated .gif!
-# parameters are input output
-function movtogif() {
-  ffmpeg -i $1 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=20 > $2
+function clean_vim_directories() {
+  rm -rf ~/.vimbackup/*
+  rm -rf ~/.vimswap/*
+  rm -rf ~/.vimviews/*
+  rm -rf ~/.vimundo/*
 }
 
-function movtocentral() {
+function movie_to_central() {
   FILE=$(basename $1)
   rsync -avP $1 central@192.168.0.101:/Data/Public/Movies
   ssh central@192.168.0.101 'sudo chmod -R 0777 /Data/Public/Movies/$FILE'
 }
 
-# empty all VIM backup/swap/views directory
-function cleanVIM() {
-  # directories we'll empty are
-  echo "Cleaning ~/.vimbackup/"
-  rm -Rf ~/.vimbackup/*
-  echo "Cleaning ~/.vimswap/"
-  rm -Rf ~/.vimswap/*
-  echo "Cleaning ~/.vimviews/"
-  rm -Rf ~/.vimviews/*
-  echo "Cleaning ~/.vimundo/"
-  rm -Rf ~/.vimundo/*
-  echo "All done!"
-}
-
-# Install casks in /Application instead of ~/Applications
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-# Use homebrew rbenv
-eval "$(rbenv init -)"
-
-# boost ulimit
-ulimit -S -n 2048
-
-# https://github.com/garabik/grc#automatic-aliases
-[[ -s "/etc/grc.zsh"  ]] && source /etc/grc.zsh
-
-# fzf
-[ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-# Load .zshrc.local if available, overrides other settings.
-[[ -r ~/.zshrc.local ]] && . ~/.zshrc.local
-
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+export SPACESHIP_CHAR_SYMBOL='\\\ '
+export SPACESHIP_PROMPT_ORDER=(
+  time          # Time stampts section
+  user          # Username section
+  dir           # Current directory section
+  git           # Git section (git_branch + git_status)
+  exec_time     # Execution time
+  line_sep      # Line break
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+)
 
 export EDITOR=nvim
 export VISUAL=nvim
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
