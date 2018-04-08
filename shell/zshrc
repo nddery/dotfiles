@@ -1,61 +1,16 @@
-source ~/.zsh.plugins.sh
+export DOTFILES="$HOME/Git/dotfiles"
+
+source $DOTFILES/zsh/alias.zsh
+source $DOTFILES/zsh/bindkeys.zsh
+source $DOTFILES/zsh/completion.zsh
+source $DOTFILES/zsh/functions.zsh
+source $DOTFILES/zsh/history.zsh
+source $DOTFILES/zsh/plugins.zsh
+
 [ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
 eval "$(rbenv init -)"
 
 ulimit -S -n 2048
-
-autoload -U compinit && compinit
-zstyle ':completion:*' menu select=1 _complete _ignored _approximate # highlight current selection
-zstyle ':completion:*:functions' ignored-patterns '_*' # ignore completion functions
-
-# bindkey "^S" beginning-of-line
-# bindkey "^E" end-of-line
-bindkey "^P" history-search-backward
-bindkey "^N" history-search-forward
-bindkey "^D" delete-char
-bindkey "^F" forward-char
-bindkey "^B" backward-char
-
-alias vimenc="vim -u ~/.vimrc.encrypted -x"
-alias rmds="find . -name '*.DS_Store' -type f -delete"
-alias update_zsh_plugins="antibody bundle < ~/.zsh.plugins.txt > ~/.zsh.plugins.sh"
-
-alias ctags="`brew --prefix`/bin/ctags"
-alias mkdir='mkdir -p'
-alias t='tmux'
-
-alias la='ls -la'
-alias ll='ls -l'
-
-alias gti='git'
-alias gs='git status'
-alias gc='git commit'
-alias ga='git add'
-alias gb='git branch'
-alias gch='git checkout'
-alias gl='git log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short'
-alias yesterday="git log --since '1 day ago' --oneline --author nddery@gmail.com"
-
-function change_color_scheme () {
-  sed \
-    --in-place \
-    --follow-symlinks \
-    '/colors:\ \*/c\colors:\ \*'$1 \
-    $HOME/.config/alacritty/alacritty.yml
-}
-
-function clean_vim_directories() {
-  rm -rf ~/.vimbackup/*
-  rm -rf ~/.vimswap/*
-  rm -rf ~/.vimviews/*
-  rm -rf ~/.vimundo/*
-}
-
-function movie_to_central() {
-  FILE=$(basename $1)
-  rsync -avP $1 central@192.168.0.101:/Data/Public/Movies
-  ssh central@192.168.0.101 'sudo chmod -R 0777 /Data/Public/Movies/$FILE'
-}
 
 export EDITOR=nvim
 export VISUAL=nvim
