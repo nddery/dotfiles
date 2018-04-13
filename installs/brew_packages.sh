@@ -22,7 +22,6 @@ declare -a PACKAGES=(
   'git'
   'gnupg'
   'htop-osx'
-  'reattach-to-user-namespace'
   'tmux'
   'wget:--enable-iri'
   'zsh'
