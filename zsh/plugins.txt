@@ -2,5 +2,6 @@ mafredri/zsh-async
 sindresorhus/pure
 rupa/z
 garabik/grc
+paulirish/git-open
 zsh-users/zsh-completions
 zsh-users/zsh-syntax-highlighting
