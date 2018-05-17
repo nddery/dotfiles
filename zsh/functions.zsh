@@ -22,3 +22,10 @@ function movie_to_central() {
 function update_zsh_plugins () {
   antibody bundle < $DOTFILES/zsh/plugins.txt > $DOTFILES/zsh/plugins.zsh
 }
+
+function rebuild_alacritty () {
+  cd ~/Git/alacritty
+  cargo build --release
+  make app
+  cp -r target/release/osx/Alacritty.app /Applications/Alacritty.app
+}
