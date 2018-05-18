@@ -20,6 +20,7 @@ function movie_to_central() {
 }
 
 function update_zsh_plugins () {
+  antibody update
   antibody bundle < $DOTFILES/zsh/plugins.txt > $DOTFILES/zsh/plugins.zsh
 }
 
