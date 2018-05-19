@@ -30,3 +30,10 @@ function rebuild_alacritty () {
   make app
   cp -r target/release/osx/Alacritty.app /Applications/Alacritty.app
 }
+
+function play_on_roku () {
+  curl \
+    -X POST -G "http://192.168.0.105:8060/input/15985" \
+    --data-urlencode "t=v" \
+    --data-urlencode "u=$1"
+}
