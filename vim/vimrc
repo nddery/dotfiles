@@ -45,7 +45,7 @@
       Plug 'wellle/tmux-complete.vim'
       Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn' }
       Plug 'othree/jspc.vim'
-      Plug 'mhartington/nvim-typescript'
+      " Plug 'mhartington/nvim-typescript'
       Plug 'SirVer/ultisnips'
       Plug 'honza/vim-snippets'
     " }
@@ -59,6 +59,7 @@
       Plug 'elzr/vim-json'
       Plug 'pangloss/vim-javascript'
       Plug 'jelera/vim-javascript-syntax'
+      Plug 'HerringtonDarkholme/yats.vim'
       Plug 'ternjs/tern_for_vim', { 'do': 'yarn' }
       Plug 'mxw/vim-jsx'
       Plug 'othree/jspc.vim'
@@ -160,8 +161,6 @@
 " }
 
 " Vim UI {
-  let g:solarized_termcolors=256
-  let g:solarized_termtrans=1
   let g:solarized_contrast="normal"
   let g:solarized_visibility="normal"
   colorscheme solarized
@@ -330,7 +329,7 @@
   " ALE {
     let g:airline#extensions#ale#enabled = 1
     let g:ale_fixers = {
-    \   'javascript': ['prettier'],
+    \   'javascript': ['prettier']
     \}
     let g:ale_fix_on_save = 1
     let g:ale_ruby_rubocop_executable = 'bundle'
