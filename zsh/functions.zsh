@@ -26,6 +26,7 @@ function update_zsh_plugins () {
 
 function rebuild_alacritty () {
   cd ~/Git/alacritty
+  git pull origin master
   cargo build --release
   make app
   cp -r target/release/osx/Alacritty.app /Applications/Alacritty.app
