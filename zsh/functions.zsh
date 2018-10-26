@@ -13,12 +13,6 @@ function clean_vim_directories() {
   rm -rf ~/.vimundo/*
 }
 
-function movie_to_central() {
-  FILE=$(basename $1)
-  rsync -avP $1 central@192.168.0.101:/Data/Public/Movies
-  ssh central@192.168.0.101 'sudo chmod -R 0777 /Data/Public/Movies/$FILE'
-}
-
 function update_zsh_plugins () {
   antibody update
   antibody bundle < $DOTFILES/zsh/plugins.txt > $DOTFILES/zsh/plugins.zsh
