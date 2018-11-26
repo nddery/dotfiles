@@ -18,14 +18,6 @@ function update_zsh_plugins () {
   antibody bundle < $DOTFILES/zsh/plugins.txt > $DOTFILES/zsh/plugins.zsh
 }
 
-function rebuild_alacritty () {
-  cd ~/Git/alacritty
-  git pull origin master
-  cargo build --release
-  make app
-  cp -r target/release/osx/Alacritty.app /Applications/Alacritty.app
-}
-
 function play_on_roku () {
   curl \
     -X POST -G "http://192.168.0.105:8060/input/15985" \
