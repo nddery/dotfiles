@@ -7,7 +7,7 @@ declare -a PACKAGES=(
   'firefox'
   'google-chrome'
 
-  'iterm2'
+  'alacritty'
   'android-file-transfer'
   'spotify'
   'vlc'
