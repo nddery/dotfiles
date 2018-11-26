@@ -11,11 +11,8 @@ declare -a PACKAGES=(
   'android-file-transfer'
   'spotify'
   'vlc'
-  'disk-inventory-x'
   'dropbox'
   'flux'
-  'limechat'
-  'utorrent'
   'rowanj-gitx'
   'caffeine'
 
