@@ -23,3 +23,4 @@ export N_PREFIX="$HOME/n";
 export PATH=":$N_PREFIX/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
+export PATH="/Users/nddery/Library/Python/3.7/bin:$PATH"
