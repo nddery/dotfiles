@@ -38,18 +38,6 @@
       endif
     " }
 
-    " AutoComplete {
-      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-      Plug 'ervandew/supertab'
-      Plug 'Shougo/neco-syntax'
-      Plug 'wellle/tmux-complete.vim'
-      " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn' }
-      Plug 'othree/jspc.vim'
-      " Plug 'mhartington/nvim-typescript'
-      Plug 'SirVer/ultisnips'
-      Plug 'honza/vim-snippets'
-    " }
-
     " PHP {
       Plug 'shawncplus/phpcomplete.vim'
       Plug 'arnaud-lb/vim-php-namespace'
@@ -84,6 +72,18 @@
     " Template highlighting {
       Plug 'slim-template/vim-slim'
     " }
+
+    " AutoComplete {
+      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+      Plug 'ervandew/supertab'
+      Plug 'Shougo/neco-syntax'
+      " Plug 'wellle/tmux-complete.vim'
+      " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn' }
+      Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+      " Plug 'SirVer/ultisnips'
+      " Plug 'honza/vim-snippets'
+    " }
+
   call plug#end()
 " }
 
