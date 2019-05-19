@@ -422,6 +422,7 @@
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#file#enable_buffer_path = 1
     let deoplete#tag#cache_limit_size = 5000000
+    let g:nvim_typescript#javascript_support = 1
     " tab cycle top to bottom
     let g:SuperTabDefaultCompletionType = "<c-n>"
 
