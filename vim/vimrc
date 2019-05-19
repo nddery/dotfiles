@@ -402,7 +402,7 @@
   "}
 
   " Close tag {
-    let g:closetag_filenames = "*.html,*.ctp,*.js"
+    let g:closetag_filenames = "*.html,*.ctp,*.js,*.jsx,*.tsx"
   "}
 
   " Fugitive {
