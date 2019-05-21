@@ -74,14 +74,11 @@
     " }
 
     " AutoComplete {
-      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-      Plug 'ervandew/supertab'
-      Plug 'Shougo/neco-syntax'
-      " Plug 'wellle/tmux-complete.vim'
-      " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn' }
-      Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-      " Plug 'SirVer/ultisnips'
-      " Plug 'honza/vim-snippets'
+      Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+      Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+      Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+      Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
+      Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
     " }
 
   call plug#end()
@@ -175,6 +172,7 @@
 
   highlight clear SignColumn      " SignColumn should match background
   highlight clear LineNr          " Current line number row will have same background color in relative mode
+  set signcolumn=yes
 
   if has('cmdline_info')
     set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
@@ -292,6 +290,38 @@
   " Matchit {
     let b:match_ignorecase = 1
   " }
+  
+  " Conquer of Completion (Coc) {
+    " Use tab for trigger completion with characters ahead and navigate.
+    " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+    inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ coc#refresh()
+    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+
+    " Use <c-space> to trigger completion.
+    inoremap <silent><expr> <c-space> coc#refresh()
+
+    " Remap keys for gotos
+    nmap <leader>gt <Plug>(coc-definition)
+
+    " Use K to show documentation in preview window
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+    function! s:show_documentation()
+      if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+      else
+        call CocAction('doHover')
+      endif
+    endfunction
+  " }
 
   " Ctags {
     set tags=./tags;/,~/.vimtags
@@ -327,7 +357,6 @@
   " }
 
   " ALE {
-    nnoremap <leader>gt :ALEGoToDefinition<cr>
     let g:airline#extensions#ale#enabled = 1
     let g:ale_fixers = {
     \   'javascript': ['prettier'],
@@ -335,9 +364,6 @@
     \}
     let g:ale_fix_on_save = 1
     let g:ale_ruby_rubocop_executable = 'bundle'
-    let g:ale_completion_enabled = 0
-    " let g:ale_typescript_tsserver_use_global = 1
-    " set completeopt+=noinsert
   " }
 
   " NerdTree {
@@ -418,27 +444,6 @@
     " Mnemonic _i_nteractive
     nnoremap <silent> <leader>gi :Git add -p %<CR>
   "}
-
-  " Autocomplete {
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#file#enable_buffer_path = 1
-    let deoplete#tag#cache_limit_size = 5000000
-    let g:nvim_typescript#javascript_support = 1
-    " tab cycle top to bottom
-    let g:SuperTabDefaultCompletionType = "<c-n>"
-
-    " " Enable omni completion.
-    " set omnifunc=syntaxcomplete#Complete
-    " autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    " autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    " " autocmd FileType javascript setlocal omnifunc=tern#Complete
-    " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    " autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    " autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-    " autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-    " autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
-  " }
 
   " Snippets {
     " remap Ultisnips for compatibility for YCM
