@@ -49,7 +49,8 @@
       Plug 'jelera/vim-javascript-syntax'
       Plug 'HerringtonDarkholme/yats.vim'
       " Plug 'ternjs/tern_for_vim', { 'do': 'yarn' }
-      Plug 'mxw/vim-jsx'
+      " Plug 'mxw/vim-jsx'
+      Plug 'amadeus/vim-jsx'
       Plug 'othree/jspc.vim'
       Plug 'posva/vim-vue'
     " }
