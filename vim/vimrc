@@ -568,7 +568,7 @@
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
   " }
 
-  " Toggle between dark and light background/colorscheme
+  " Toggle between dark and light background/colorscheme {
     function! s:ToggleBackground()
       if g:colors_name == 'solarized'
         colorscheme github
@@ -580,4 +580,29 @@
     endfunction
 
     command! TB :call s:ToggleBackground()
+  " }
+
+  " Save a quick fix list {
+    function SaveQuickFixList(fname) 
+      let list = getqflist() 
+      for i in range(len(list)) 
+        if has_key(list[i], 'bufnr') 
+          let list[i].filename = fnamemodify(bufname(list[i].bufnr), ':p') 
+          unlet list[i].bufnr 
+        endif 
+      endfor 
+      let string = string(list) 
+      let lines = split(string, "\n") 
+      call writefile(lines, a:fname) 
+    endfunction 
+  " }
+
+  " Load a saved quick fix list {
+    function LoadQuickFixList(fname) 
+      let lines = readfile(a:fname) 
+      let string = join(lines, "\n") 
+      call setqflist(eval(string)) 
+      :copen
+    endfunction
+  " }
 " }
