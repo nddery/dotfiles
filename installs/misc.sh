@@ -16,6 +16,11 @@ main() {
     execute "curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   fi
+
+  if [ ! -f ~/Library/Fonts/Cascadia.ttf ]
+  then
+    curl -o ~/Library/Fonts/Cascadia.ttf https://github.com/microsoft/cascadia-code/releases/latest/download/Cascadia.ttf
+  fi
 }
 
 main
