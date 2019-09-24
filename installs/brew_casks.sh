@@ -23,6 +23,8 @@ declare -a PACKAGES=(
   'qlstephen'
   'quicklook-csv'
   'quicklook-json'
+
+  'font-cascadia'
 )
 
 main() {
@@ -35,6 +37,7 @@ main() {
 
   execute "brew update --all" "Updated Homebrew"
   execute "brew upgrade `brew outdated`" "Upgraded outdated packages"
+  execute "brew tap homebrew/cask-fonts"
 
   if ! brew info brew-cask &>/dev/null; then
     brew_install "brew-cask" "caskroom/cask/brew-cask"
