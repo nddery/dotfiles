@@ -24,3 +24,7 @@ function play_on_roku () {
     --data-urlencode "t=v" \
     --data-urlencode "u=$1"
 }
+
+function update_vim_plugins () {
+  nvim +PlugUpgrade +PlugUpdate +PlugClean
+}
