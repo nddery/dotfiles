@@ -35,6 +35,7 @@
   checout = checkout
   chekcout = checkout
   cehckout = checkout
+  fethc = fetch
 
 [color]
   ui = always
