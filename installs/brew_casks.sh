@@ -12,7 +12,6 @@ declare -a PACKAGES=(
   'spotify'
   'vlc'
   'dropbox'
-  'flux'
   'rowanj-gitx'
   'caffeine'
 
