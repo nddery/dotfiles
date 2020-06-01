@@ -1,6 +1,6 @@
 function change_color_scheme () {
   sed \
-    --in-place \
+    -i \
     --follow-symlinks \
     '/colors:\ \*/c\colors:\ \*'$1 \
     $HOME/.config/alacritty/alacritty.yml
