@@ -1,6 +1,6 @@
 bindkey -e # Use emacs key bindings
-# bindkey "^S" beginning-of-line
-# bindkey "^E" end-of-line
+# bindkey "^s" beginning-of-line
+bindkey "^e" end-of-line
 bindkey "^p" history-search-backward
 bindkey "^n" history-search-forward
 bindkey "^d" delete-char
