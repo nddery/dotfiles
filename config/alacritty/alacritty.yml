@@ -14,6 +14,8 @@ env:
   TERM: xterm-256color
 
 window:
+  dynamic_title: false
+
   # Window dimensions in character columns and lines
   # (changes require restart)
   dimensions:
@@ -166,7 +168,7 @@ colors: *dark
 #
 # To completely disable the visual bell, set its duration to 0.
 #
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
 
@@ -219,8 +221,6 @@ mouse:
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
-
-dynamic_title: false
 
 cursor:
   # Style of the cursor
