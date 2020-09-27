@@ -65,6 +65,10 @@
       Plug 'alvan/vim-closetag'
     " }
 
+    " Markdown {
+      Plug 'plasticboy/vim-markdown' " depends on Tabular
+    " }
+
     " CSS {
       Plug 'hail2u/vim-css3-syntax'
       Plug 'cakebaker/scss-syntax.vim'
@@ -405,6 +409,10 @@
     let g:vim_json_syntax_conceal = 0
   " }
 
+  " Markdown {
+    let g:vim_markdown_conceal = 0
+    let g:vim_markdown_conceal_code_blocks = 0
+  " }
   " Tern {
     " nnoremap <leader>gt :TernDef<CR>
     " let g:tern_show_argument_hints = 'on_hold'
@@ -418,7 +426,7 @@
   " FZF {
     nmap <silent> <c-f> :Files<cr>
     nmap <silent> <c-b> :Buffers<cr>
-    nmap <silent> <c-w> :Lines<cr>
+    nmap <silent> <c-l> :Lines<cr>
     nmap <silent> <c-s> :Ag<cr>
     autocmd VimEnter * command! -nargs=* Ag
       \ call fzf#vim#ag(<q-args>, {'options': '--bind=ctrl-s:select-all,ctrl-d:deselect-all '})
