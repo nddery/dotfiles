@@ -5,9 +5,13 @@
 [core]
   editor = /usr/local/bin/nvim
   excludesfile = ~/.gitignore
+  autocrlf = input
 
 [rebase]
   autosquash = true
+
+[pull]
+  rebase = false
 
 [push]
   default = simple
