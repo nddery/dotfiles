@@ -1,6 +1,7 @@
 [user]
   name = Nicolas Duvieusart Déry
   email = nddery@gmail.com
+	signingkey = 687F56B105B1385D
 
 [core]
   editor = /usr/local/bin/nvim
