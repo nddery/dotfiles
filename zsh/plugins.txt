@@ -5,3 +5,4 @@ garabik/grc
 paulirish/git-open
 zsh-users/zsh-completions
 zsh-users/zsh-syntax-highlighting
+ohmyzsh/ohmyzsh path:plugins/gpg-agent
