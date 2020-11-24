@@ -53,6 +53,7 @@
       Plug 'amadeus/vim-jsx'
       Plug 'othree/jspc.vim'
       Plug 'posva/vim-vue'
+      Plug 'jparise/vim-graphql'
     " }
 
     " Ruby {
@@ -366,7 +367,12 @@
     let g:ale_fixers = {
     \   'javascript': ['prettier'],
     \   'typescript': ['prettier'],
+    \   'javascriptreact': ['prettier'],
     \   'typescriptreact': ['prettier']
+    \}
+    let g:ale_linters_ignore = {
+    \   'typescript': ['eslint'],
+    \   'typescriptreact': ['eslint']
     \}
     let g:ale_fix_on_save = 1
     let g:ale_ruby_rubocop_executable = 'bundle'
