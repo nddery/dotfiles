@@ -5,15 +5,14 @@ source utils.sh
 # package:options
 declare -a PACKAGES=(
   'firefox'
-  'google-chrome'
+  # 'google-chrome'
 
   'alacritty'
-  'android-file-transfer'
+  # 'android-file-transfer'
   'spotify'
   'vlc'
-  'dropbox'
-  'rowanj-gitx'
-  'caffeine'
+  # 'dropbox'
+  # 'caffeine'
 
   'qlcolorcode'
   'qlimagesize'
