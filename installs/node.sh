@@ -6,7 +6,7 @@ main() {
   if ! cmd_exists 'node'; then
     # Installs `n`, which in turn installs node latest version.
     # https://github.com/tj/n#installation
-    curl -L http://git.io/n-install | bash
+    curl -L https://git.io/n-install | bash
   fi
 
   print_result $? 'Node'

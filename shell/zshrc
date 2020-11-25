@@ -9,7 +9,7 @@ source $DOTFILES/zsh/plugins.zsh
 source ~/.zshlocalrc
 
 [ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 
 ulimit -S -n 2048
 
