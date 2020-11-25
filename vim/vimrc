@@ -368,7 +368,8 @@
     \   'javascript': ['prettier'],
     \   'typescript': ['prettier'],
     \   'javascriptreact': ['prettier'],
-    \   'typescriptreact': ['prettier']
+    \   'typescriptreact': ['prettier'],
+    \   'graphql': ['prettier']
     \}
     let g:ale_linters_ignore = {
     \   'typescript': ['eslint'],
