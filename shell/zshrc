@@ -6,7 +6,10 @@ source $DOTFILES/zsh/completion.zsh
 source $DOTFILES/zsh/functions.zsh
 source $DOTFILES/zsh/history.zsh
 source $DOTFILES/zsh/plugins.zsh
-source ~/.zshlocalrc
+
+if [ -f ~/.zshlocalrc ]; then
+  source ~/.zshlocalrc
+fi;
 
 [ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
 # eval "$(rbenv init -)"
