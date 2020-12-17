@@ -17,9 +17,6 @@
 [push]
   default = simple
 
-[init]
-  templatedir = ~/.git_template
-
 [alias]
   fix = "!f() { ${EDITOR} `git diff --name-only`; }; f"
   ctags = !.git/hooks/ctags
