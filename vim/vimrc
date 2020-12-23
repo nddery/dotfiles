@@ -30,9 +30,6 @@
       Plug 'vim-scripts/restore_view.vim'
       Plug 'gcmt/wildfire.vim'
       Plug 'godlygeek/tabular'
-      if executable('ctags')
-        Plug 'majutsushi/tagbar'
-      endif
       if (!has('nvim'))
         Plug 'matchit.zip'
       endif
@@ -329,16 +326,6 @@
     endfunction
   " }
 
-  " Ctags {
-    set tags=./tags;/,~/.vimtags
-
-    " Make tags placed in .git/tags file available in all levels of a repository
-    let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
-    if gitroot != ''
-      let &tags = &tags . ',' . gitroot . '/.git/tags'
-    endif
-  " }
-
   " TmuxNavigate {
     let g:tmux_navigator_save_on_switch = 1
   " }
@@ -439,10 +426,6 @@
     autocmd VimEnter * command! -nargs=* Ag
       \ call fzf#vim#ag(<q-args>, {'options': '--bind=ctrl-s:select-all,ctrl-d:deselect-all '})
   " }
-
-  " TagBar {
-    nnoremap <silent> <leader>tt :TagbarToggle<CR>
-  "}
 
   " Close tag {
     let g:closetag_filenames = "*.html,*.ctp,*.js,*.jsx,*.tsx"
