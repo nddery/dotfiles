@@ -6,8 +6,6 @@
       Plug 'tpope/vim-sensible'
       Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
       Plug 'altercation/vim-colors-solarized'
-      Plug 'myusuf3/numbers.vim'
-      Plug 'w0rp/ale'
       Plug 'janko-m/vim-test'
       Plug 'airblade/vim-gitgutter'
       Plug 'tpope/vim-fugitive'
@@ -36,35 +34,33 @@
     " }
 
     " PHP {
-      Plug 'shawncplus/phpcomplete.vim'
-      Plug 'arnaud-lb/vim-php-namespace'
+      Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+      Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }
     " }
 
     " Javascript {
-      Plug 'elzr/vim-json'
+      Plug 'elzr/vim-json', { 'for': 'json' }
       Plug 'pangloss/vim-javascript'
-      Plug 'jelera/vim-javascript-syntax'
       Plug 'HerringtonDarkholme/yats.vim'
-      " Plug 'ternjs/tern_for_vim', { 'do': 'yarn' }
-      " Plug 'mxw/vim-jsx'
-      Plug 'amadeus/vim-jsx'
-      Plug 'othree/jspc.vim'
-      Plug 'posva/vim-vue'
+      Plug 'MaxMEllon/vim-jsx-pretty'
+      Plug 'peitalin/vim-jsx-typescript'
+      Plug 'posva/vim-vue', { 'for': 'vue' }
       Plug 'jparise/vim-graphql'
+      Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
     " }
 
     " Ruby {
-      Plug 'vim-ruby/vim-ruby'
-      Plug 'tpope/vim-rails'
-      Plug 'tpope/vim-endwise'
+      Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+      Plug 'tpope/vim-rails', { 'for': 'ruby' }
+      Plug 'tpope/vim-endwise', { 'for': 'ruby' }
     " }
 
     " HTML {
-      Plug 'alvan/vim-closetag'
+      " Plug 'alvan/vim-closetag'
     " }
 
     " Markdown {
-      Plug 'plasticboy/vim-markdown' " depends on Tabular
+      Plug 'plasticboy/vim-markdown', { 'for': 'markdown' } " depends on Tabular
     " }
 
     " CSS {
@@ -72,15 +68,7 @@
       Plug 'cakebaker/scss-syntax.vim'
     " }
 
-    " Template highlighting {
-      Plug 'slim-template/vim-slim'
-    " }
-
     " AutoComplete {
-      Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-      Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-      Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-      Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
       Plug 'neoclide/coc.nvim', {'branch': 'release'}
     " }
 
@@ -165,9 +153,6 @@
   let g:solarized_visibility="normal"
   colorscheme solarized
   set background=dark
-
-  syn keyword jsCommentTodo REFACTOR
-  syn keyword rubyTodo REFACTOR
 
   set showmode                    " Display the current mode
 
@@ -295,6 +280,18 @@
   " }
   
   " Conquer of Completion (Coc) {
+    let g:coc_global_extensions = [
+      \ 'coc-tsserver'
+      \ ]
+
+    if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+      let g:coc_global_extensions += ['coc-prettier']
+    endif
+
+    if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+      let g:coc_global_extensions += ['coc-eslint']
+    endif
+
     " Use tab for trigger completion with characters ahead and navigate.
     " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
     inoremap <silent><expr> <TAB>
@@ -313,6 +310,12 @@
 
     " Remap keys for gotos
     nmap <leader>gt <Plug>(coc-definition)
+    nmap <silent> gt <Plug>(coc-definition)
+
+    " Symbol renaming.
+    nmap <leader>rn <Plug>(coc-rename)
+
+    nmap <leader>qf  <Plug>(coc-fix-current)
 
     " Use K to show documentation in preview window
     nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -347,23 +350,6 @@
 
   " JSX {
     let g:jsx_ext_required = 0
-  " }
-
-  " ALE {
-    let g:airline#extensions#ale#enabled = 1
-    let g:ale_fixers = {
-    \   'javascript': ['prettier'],
-    \   'typescript': ['prettier'],
-    \   'javascriptreact': ['prettier'],
-    \   'typescriptreact': ['prettier'],
-    \   'graphql': ['prettier']
-    \}
-    let g:ale_linters_ignore = {
-    \   'typescript': ['eslint'],
-    \   'typescriptreact': ['eslint']
-    \}
-    let g:ale_fix_on_save = 1
-    let g:ale_ruby_rubocop_executable = 'bundle'
   " }
 
   " NerdTree {
@@ -408,11 +394,6 @@
     let g:vim_markdown_conceal = 0
     let g:vim_markdown_conceal_code_blocks = 0
   " }
-  " Tern {
-    " nnoremap <leader>gt :TernDef<CR>
-    " let g:tern_show_argument_hints = 'on_hold'
-    " let g:tern_show_signature_in_pum = 1
-  " }
 
   " Ag {
     nnoremap <leader>f :Ag <c-r>=expand("<cword>")<cr>
@@ -427,9 +408,9 @@
       \ call fzf#vim#ag(<q-args>, {'options': '--bind=ctrl-s:select-all,ctrl-d:deselect-all '})
   " }
 
-  " Close tag {
-    let g:closetag_filenames = "*.html,*.ctp,*.js,*.jsx,*.tsx"
-  "}
+  " " Close tag {
+  "   let g:closetag_filenames = "*.html,*.ctp,*.js,*.jsx,*.tsx"
+  " "}
 
   " Fugitive {
     nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -444,23 +425,6 @@
     " Mnemonic _i_nteractive
     nnoremap <silent> <leader>gi :Git add -p %<CR>
   "}
-
-  " Snippets {
-    " remap Ultisnips for compatibility for YCM
-    let g:UltiSnipsExpandTrigger = '<C-j>'
-    let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-    let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-
-    " For snippet_complete marker.
-    if has('conceal')
-      set conceallevel=2 concealcursor=i
-    endif
-
-    " Disable the neosnippet preview candidate window
-    " When enabled, there can be too much visual noise
-    " especially when splits are used.
-    set completeopt-=preview
-  " }
 
   " UndoTree {
     nnoremap <Leader>u :UndotreeToggle<CR>
@@ -483,7 +447,8 @@
     let g:airline_theme = 'solarized'
     let g:airline#extensions#tabline#left_sep = ' '
     let g:airline#extensions#tabline#left_alt_sep = '|'
-    let g:airline_extensions = ['ale', 'branch']
+    " let g:airline_extensions = ['ale', 'branch']
+    let g:airline_extensions = ['branch']
   " }
 
   " bufexplorer {

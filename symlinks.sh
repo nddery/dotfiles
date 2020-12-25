@@ -51,6 +51,7 @@ main() {
 
   mkdir -p $HOME/.config/nvim
   link "$(pwd)/config/nvim/init.vim" "$HOME/.config/nvim/init.vim"
+  link "$(pwd)/config/nvim/coc-settings.json" "$HOME/.config/nvim/coc-settings.json"
 }
 
 main
