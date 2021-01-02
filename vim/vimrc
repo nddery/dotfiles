@@ -45,7 +45,7 @@
       Plug 'MaxMEllon/vim-jsx-pretty'
       Plug 'posva/vim-vue', { 'for': 'vue' }
       Plug 'jparise/vim-graphql'
-      Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+      " Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
     " }
 
     " Ruby {
