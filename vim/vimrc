@@ -43,7 +43,6 @@
       Plug 'pangloss/vim-javascript'
       Plug 'HerringtonDarkholme/yats.vim'
       Plug 'MaxMEllon/vim-jsx-pretty'
-      Plug 'peitalin/vim-jsx-typescript'
       Plug 'posva/vim-vue', { 'for': 'vue' }
       Plug 'jparise/vim-graphql'
       Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
