@@ -59,7 +59,7 @@
 " General {
   nmap <space> :
   inoremap jj <esc>
-  set timeoutlen=200
+  set timeoutlen=300
 
   set mouse=a
   " enable pane resize with the mouse inside of tmux
@@ -183,16 +183,8 @@
   set splitbelow                  " Puts new split windows to the bottom of the current
   set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 
-  autocmd FileType c,cpp,java,go,php,javascript,typescript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
-  autocmd FileType python setlocal shiftwidth=4 softtabstop=4
+  autocmd FileType c,cpp,java,go,php,javascript,javascriptreact,typescript,typescriptreact,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
   autocmd FileType crontab setlocal nobackup nowritebackup
-
-  au BufRead,BufNewFile *.make set ft=dosini
-  au BufRead,BufNewFile *.info set ft=dosini
-  au BufRead,BufNewFile *.ctp set ft=php.html
-  au BufRead,BufNewFile *.twig set ft=html
-  au BufRead,BufNewFile *.handlebars set ft=html
-  au BufRead,BufNewFile *.pp set ft=ruby
 
   " http://vim.wikia.com/wiki/Fix_syntax_highlighting
   noremap <F11> <Esc>:syntax sync fromstart<CR>
@@ -205,18 +197,6 @@
   " Wrapped lines goes down/up to next row, rather than next line in file.
   noremap j gj
   noremap k gk
-
-  if has("user_commands")
-    command! -bang -nargs=* -complete=file E e<bang> <args>
-    command! -bang -nargs=* -complete=file W w<bang> <args>
-    command! -bang -nargs=* -complete=file Wq wq<bang> <args>
-    command! -bang -nargs=* -complete=file WQ wq<bang> <args>
-    command! -bang Wa wa<bang>
-    command! -bang WA wa<bang>
-    command! -bang Q q<bang>
-    command! -bang QA qa<bang>
-    command! -bang Qa qa<bang>
-  endif
 
   " Yank from the cursor to the end of the line, to be consistent with C and D.
   nnoremap Y y$
@@ -238,7 +218,6 @@
   " Find merge conflict markers
   map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
 
-  " Shortcuts
   " Change Working Directory to that of the current file
   cmap cwd lcd %:p:h
   cmap cd. lcd %:p:h
@@ -250,8 +229,7 @@
   " For when you forget to sudo.. Really Write the file.
   cmap w!! w !sudo tee % >/dev/null
 
-  " display all lines with keyword under cursor
-  " and ask which one to jump to
+  " display all lines with keyword under cursor and ask which one to jump to
   nmap <leader>fif [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " }
 
@@ -289,16 +267,10 @@
     " Use <c-space> to trigger completion.
     inoremap <silent><expr> <c-space> coc#refresh()
 
-    " Remap keys for gotos
     nmap <leader>gt <Plug>(coc-definition)
-    nmap <silent> gt <Plug>(coc-definition)
-
-    " Symbol renaming.
+    nmap <silent>gt <Plug>(coc-definition)
     nmap <leader>rn <Plug>(coc-rename)
-
-    nmap <leader>af  <Plug>(coc-fix-current)
-
-    " Use K to show documentation in preview window
+    nmap <leader>af <Plug>(coc-fix-current)
     nnoremap <silent> K :call <SID>show_documentation()<CR>
 
     function! s:show_documentation()
@@ -345,25 +317,6 @@
     let NERDTreeShowHidden=1
     let NERDTreeKeepTreeInNewTab=1
     let g:nerdtree_tabs_open_on_gui_startup=0
-  " }
-
-  " Tabularize {
-    nmap <Leader>a& :Tabularize /&<CR>
-    vmap <Leader>a& :Tabularize /&<CR>
-    nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
-    vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
-    nmap <Leader>a=> :Tabularize /=><CR>
-    vmap <Leader>a=> :Tabularize /=><CR>
-    nmap <Leader>a: :Tabularize /:<CR>
-    vmap <Leader>a: :Tabularize /:<CR>
-    nmap <Leader>a:: :Tabularize /:\zs<CR>
-    vmap <Leader>a:: :Tabularize /:\zs<CR>
-    nmap <Leader>a, :Tabularize /,<CR>
-    vmap <Leader>a, :Tabularize /,<CR>
-    nmap <Leader>a,, :Tabularize /,\zs<CR>
-    vmap <Leader>a,, :Tabularize /,\zs<CR>
-    nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
   " }
 
   " JSON {
