@@ -21,7 +21,6 @@
       Plug 'vim-airline/vim-airline'
       Plug 'vim-airline/vim-airline-themes'
       Plug 'bling/vim-bufferline'
-      Plug 'easymotion/vim-easymotion'
       Plug 'mbbill/undotree'
       Plug 'Yggdroot/indentLine'
       Plug 'vim-scripts/restore_view.vim'
