@@ -4,12 +4,12 @@
   call plug#begin()
     " General {
       Plug 'tpope/vim-sensible'
-      Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
       Plug 'altercation/vim-colors-solarized'
+      Plug 'flazz/vim-colorschemes'
+      Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
       Plug 'janko-m/vim-test'
       Plug 'airblade/vim-gitgutter'
       Plug 'tpope/vim-fugitive'
-      Plug 'darfink/vim-plist', { 'for': 'plist' }
       Plug 'tomtom/tcomment_vim'
       Plug 'jlanzarotta/bufexplorer'
       Plug 'rizzatti/dash.vim'
@@ -22,15 +22,22 @@
       Plug 'vim-airline/vim-airline-themes'
       Plug 'bling/vim-bufferline'
       Plug 'easymotion/vim-easymotion'
-      Plug 'flazz/vim-colorschemes'
       Plug 'mbbill/undotree'
       Plug 'Yggdroot/indentLine'
       Plug 'vim-scripts/restore_view.vim'
       Plug 'gcmt/wildfire.vim'
-      Plug 'godlygeek/tabular'
       if (!has('nvim'))
         Plug 'matchit.zip'
       endif
+    " }
+
+    " Language support (highlighting and indentation) {
+      Plug 'sheerun/vim-polyglot'
+      Plug 'darfink/vim-plist', { 'for': 'plist' }
+    " }
+
+    " AutoComplete {
+      Plug 'neoclide/coc.nvim', { 'branch': 'release' }
     " }
 
     " PHP {
@@ -38,39 +45,14 @@
       Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }
     " }
 
-    " Javascript {
-      Plug 'elzr/vim-json', { 'for': 'json' }
-      Plug 'pangloss/vim-javascript'
-      Plug 'HerringtonDarkholme/yats.vim'
-      Plug 'MaxMEllon/vim-jsx-pretty'
-      Plug 'posva/vim-vue', { 'for': 'vue' }
-      Plug 'jparise/vim-graphql'
-      " Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-    " }
-
     " Ruby {
-      Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
       Plug 'tpope/vim-rails', { 'for': 'ruby' }
       Plug 'tpope/vim-endwise', { 'for': 'ruby' }
     " }
 
-    " HTML {
-      " Plug 'alvan/vim-closetag'
-    " }
-
-    " Markdown {
-      Plug 'plasticboy/vim-markdown', { 'for': 'markdown' } " depends on Tabular
-    " }
-
     " CSS {
       Plug 'hail2u/vim-css3-syntax'
-      Plug 'cakebaker/scss-syntax.vim'
     " }
-
-    " AutoComplete {
-      Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    " }
-
   call plug#end()
 " }
 
