@@ -269,7 +269,10 @@
     nmap <leader>gt <Plug>(coc-definition)
     nmap <silent>gt <Plug>(coc-definition)
     nmap <leader>rn <Plug>(coc-rename)
+    nmap <leader>fr <plug>(coc-references)
     nmap <leader>af <Plug>(coc-fix-current)
+    nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]g <Plug>(coc-diagnostic-next)
     nnoremap <silent> K :call <SID>show_documentation()<CR>
 
     function! s:show_documentation()
