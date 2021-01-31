@@ -1,5 +1,5 @@
 mafredri/zsh-async
-sindresorhus/pure
+sindresorhus/pure branch:main
 rupa/z
 garabik/grc
 paulirish/git-open
