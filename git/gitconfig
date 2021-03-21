@@ -1,6 +1,6 @@
 [user]
-  name = Nicolas Duvieusart Déry
-  email = nddery@gmail.com
+	name = Nicolas Duvieusart Déry
+	email = nddery@gmail.com
 	signingkey = 687F56B105B1385D
 
 [core]
@@ -65,3 +65,5 @@
   required = true
 [commit]
 	gpgsign = true
+[init]
+	defaultBranch = main
