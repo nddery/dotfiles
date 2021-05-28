@@ -20,7 +20,7 @@ function update_zsh_plugins () {
 
 function play_on_roku () {
   curl \
-    -X POST -G "http://192.168.0.105:8060/input/15985" \
+    -X POST -G "http://192.168.0.12:8060/input/15985" \
     --data-urlencode "t=v" \
     --data-urlencode "u=$1"
 }
