@@ -25,6 +25,7 @@
       Plug 'Yggdroot/indentLine'
       Plug 'vim-scripts/restore_view.vim'
       Plug 'gcmt/wildfire.vim'
+      Plug 'easymotion/vim-easymotion'
       if (!has('nvim'))
         Plug 'matchit.zip'
       endif
@@ -269,10 +270,11 @@
     nmap <leader>gt <Plug>(coc-definition)
     nmap <silent>gt <Plug>(coc-definition)
     nmap <leader>rn <Plug>(coc-rename)
+    nmap <leader>ca <Plug>(coc-action)
     nmap <leader>fr <plug>(coc-references)
     nmap <leader>af <Plug>(coc-fix-current)
-    nmap <silent> [g <Plug>(coc-diagnostic-prev)
-    nmap <silent> ]g <Plug>(coc-diagnostic-next)
+    nmap <silent> [d <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]d <Plug>(coc-diagnostic-next)
     nnoremap <silent> K :call <SID>show_documentation()<CR>
 
     function! s:show_documentation()
