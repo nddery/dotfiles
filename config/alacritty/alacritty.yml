@@ -205,6 +205,7 @@ mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
 
+hints:
   url:
     # URL launcher
     #
