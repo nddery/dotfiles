@@ -1,5 +1,5 @@
 function change_color_scheme () {
-  sed \
+  gsed \
     -i \
     --follow-symlinks \
     '/colors:\ \*/c\colors:\ \*'$1 \
