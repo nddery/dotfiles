@@ -8,10 +8,9 @@ declare -a PACKAGES=(
   # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
   'coreutils'
   'moreutils'
-  # GNU `find`, `locate`, `updatedb`, and `xargs` are `g`-prefixed
+  # GNU `find`, `locate`, `updatedb`, `xargs`, and `sed` are `g`-prefixed
   'findutils'
-  # GNU `sed`, overwrites the built-in `sed`
-  'gnu-sed:--default-names'
+  'gnu-sed'
 
   # generic colouriser  http://kassiopeia.juls.savba.sk/~garabik/software/grc/
   'grc'
