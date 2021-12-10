@@ -8,7 +8,14 @@ declare -a PACKAGES=(
   'google-chrome'
 
   'alacritty'
+  'appcleaner'
+  'dash'
+  'fork'
+  'monitorcontrol'
+  'postman'
+  'slack'
   'spotify'
+  'visual-studio-code'
   'vlc'
 
   'qlcolorcode'

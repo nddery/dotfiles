@@ -11,28 +11,30 @@ declare -a PACKAGES=(
   # GNU `find`, `locate`, `updatedb`, `xargs`, and `sed` are `g`-prefixed
   'findutils'
   'gnu-sed'
+  'gnupg'
 
-  # generic colouriser  http://kassiopeia.juls.savba.sk/~garabik/software/grc/
-  'grc'
-
-  'the_silver_searcher'
   'ack'
   'fzf'
+  'getantibody/tap/antibody'
   'git'
   'gnupg'
+  'grc'
+  'htop'
   'htop-osx'
+  'jq'
+  'pinentry-mac'
+  'rbenv'
+  'the_silver_searcher'
   'tmux'
   'wget:--enable-iri'
-  'zsh'
-  'getantibody/tap/antibody'
-  'rbenv'
   'z'
+  'zsh'
 
-  'ctags'
-  'vim:--override-system-vi'
   'neovim'
+  'vim:--override-system-vi'
 
   'yarn:--ignore-dependencies'
+
 )
 
 main() {
