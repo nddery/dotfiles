@@ -28,3 +28,7 @@ function play_on_roku () {
 function update_vim_plugins () {
   nvim +PlugUpgrade +PlugUpdate +PlugClean
 }
+
+function reset_logi_mx () {
+  kill `pgrep LogiMgrDaemon`
+}
