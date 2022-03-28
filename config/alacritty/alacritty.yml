@@ -40,6 +40,8 @@ window:
   #   title bar buttons
   decorations: full
 
+  opacity: 1.0
+
 scrolling:
   # Maximum number of lines in the scrollback buffer.
   # Specifying '0' will disable scrolling.
@@ -171,9 +173,6 @@ colors: *dark
 bell:
   animation: EaseOutExpo
   duration: 0
-
-# Background opacity
-background_opacity: 1.0
 
 # Mouse bindings
 #
