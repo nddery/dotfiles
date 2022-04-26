@@ -33,6 +33,7 @@
 
     " Language support (highlighting and indentation) {
       Plug 'sheerun/vim-polyglot'
+      Plug 'jasdel/vim-smithy'
       Plug 'darfink/vim-plist', { 'for': 'plist' }
     " }
 
