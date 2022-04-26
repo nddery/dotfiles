@@ -4,7 +4,7 @@
 	signingkey = 687F56B105B1385D
 
 [core]
-  editor = /usr/local/bin/nvim
+  editor = nvim
   excludesfile = ~/.gitignore
   autocrlf = input
 
