@@ -2,8 +2,14 @@ function change_color_scheme () {
   gsed \
     -i \
     --follow-symlinks \
-    '/colors:\ \*/c\colors:\ \*'$1 \
+    "s/colors: \*.*/colors: \*$1/" \
     $HOME/.config/alacritty/alacritty.yml
+
+  gsed \
+    -i \
+    --follow-symlinks \
+    "s/let g:initial_color_mode=\".*\"/let g:initial_color_mode=\"$1\"/" \
+    $HOME/.vimrc
 }
 
 function clean_vim_directories() {

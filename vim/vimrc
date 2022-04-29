@@ -134,8 +134,15 @@
 " Vim UI {
   let g:solarized_contrast="normal"
   let g:solarized_visibility="normal"
-  colorscheme solarized
-  set background=dark
+
+  let g:initial_color_mode="dark"
+  if g:initial_color_mode == "dark"
+    colorscheme solarized
+    set background=dark
+  else
+    colorscheme github
+    set background=light
+  endif
 
   set showmode                    " Display the current mode
 
