@@ -18,14 +18,8 @@ ulimit -S -n 2048
 
 export EDITOR=nvim
 export VISUAL=nvim
-export DISABLE_SPRING=1
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export N_PREFIX="$HOME/n";
-
-export PATH=":$N_PREFIX/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/Library/Python/3.7/bin:$PATH"
-export PATH="/usr/local/sbin:$PATH"
