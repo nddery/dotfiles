@@ -40,7 +40,7 @@ window:
   #   bar buttons
   # - `buttonless`: Window with title bar with transparent background and no
   #   title bar buttons
-  decorations: full
+  decorations: transparent
 
   opacity: 1.0
 
@@ -54,7 +54,7 @@ scrolling:
   multiplier: 3
 
 # When true, bold text is drawn using the bright variant of colors.
-draw_bold_text_with_bright_colors: true
+draw_bold_text_with_bright_colors: false
 
 # Font configuration (changes require restart)
 font:
