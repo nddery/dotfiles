@@ -40,7 +40,7 @@ window:
   #   bar buttons
   # - `buttonless`: Window with title bar with transparent background and no
   #   title bar buttons
-  decorations: transparent
+  decorations: full
 
   opacity: 1.0
 
