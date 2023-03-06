@@ -47,11 +47,10 @@ main() {
 
   # setup XDG config directory and configs
   mkdir -p $HOME/.config/alacritty
-  link "$(pwd)/config/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
+  link "$(pwd)/config/alacritty" "$HOME/.config/alacritty"
 
   mkdir -p $HOME/.config/nvim
-  link "$(pwd)/config/nvim/init.vim" "$HOME/.config/nvim/init.vim"
-  link "$(pwd)/config/nvim/coc-settings.json" "$HOME/.config/nvim/coc-settings.json"
+  link "$(pwd)/config/nvim" "$HOME/.config/nvim"
 }
 
 main
