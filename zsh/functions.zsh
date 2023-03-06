@@ -32,7 +32,7 @@ function play_on_roku () {
 }
 
 function update_vim_plugins () {
-  nvim +PlugUpgrade +PlugUpdate +PlugClean
+  nvim +PlugUpgrade +PlugUpdate +PlugClean +CocUpdate
 }
 
 function reset_logi_mx () {
