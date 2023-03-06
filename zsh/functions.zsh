@@ -36,5 +36,6 @@ function update_vim_plugins () {
 }
 
 function reset_logi_mx () {
-  kill `pgrep LogiMgrDaemon`
+  PID=`ps aux | grep -i 'MacOS/logioptionsplus_agent' | grep 'launchd' | awk '{print $2}'`
+  kill -9 $PID
 }
