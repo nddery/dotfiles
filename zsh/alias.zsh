@@ -3,7 +3,6 @@ alias rmds="find . -name '*.DS_Store' -type f -delete"
 
 alias ctags="`brew --prefix`/bin/ctags"
 alias mkdir='mkdir -p'
-alias tmux="TERM=screen-256color-bce tmux"
 
 alias la='ls -la'
 alias ll='ls -l'
