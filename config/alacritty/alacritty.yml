@@ -2,15 +2,14 @@
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
-# set by alacritty it self.
+# set by alacritty itself.
 env:
-  # TERM env customization.
+  # TERM variable
   #
-  # If this property is not set, alacritty will set it to xterm-256color.
-  #
-  # Note that some xterm terminfo databases don't declare support for italics.
-  # You can verify this by checking for the presence of `smso` and `sitm` in
-  # `infocmp xterm-256color`.
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
   TERM: xterm-256color
 
 window:
@@ -60,19 +59,22 @@ draw_bold_text_with_bright_colors: false
 font:
   # The normal (roman) font face to use.
   normal:
-    family: Cascadia Code
+    family: CaskaydiaCove Nerd Font
+    # family: Cascadia Code
     # Style can be specified to pick a specific face.
     # style: Regular
 
   # The bold font face
   bold:
-    family: Cascadia Code
+    family: CaskaydiaCove Nerd Font
+    # family: Cascadia Code
     # Style can be specified to pick a specific face.
     # style: Bold
 
   # The italic font face
   italic:
-    family: Cascadia Code
+    family: CaskaydiaCove Nerd Font
+    # family: Cascadia Code
     # Style can be specified to pick a specific face.
     # style: Italic
 
