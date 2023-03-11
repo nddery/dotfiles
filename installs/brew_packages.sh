@@ -24,6 +24,7 @@ declare -a PACKAGES=(
   'jq'
   'pinentry-mac'
   'rbenv'
+  'ripgrep'
   'the_silver_searcher'
   'tmux'
   'wget:--enable-iri'
