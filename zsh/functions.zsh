@@ -8,8 +8,8 @@ function change_color_scheme () {
   gsed \
     -i \
     --follow-symlinks \
-    "s/let g:initial_color_mode=\".*\"/let g:initial_color_mode=\"$1\"/" \
-    $HOME/.vimrc
+    "s/vim.opt.background = \".*\"/vim.opt.background = \"$1\"/" \
+    $HOME/.config/nvim/lua/nddery/plugins/colorscheme.lua
 }
 
 function clean_vim_directories() {
