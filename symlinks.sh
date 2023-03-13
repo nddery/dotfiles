@@ -10,9 +10,6 @@ declare -a DOTFILES_TO_SYMLINK=(
 
   'git/gitconfig'
   'git/gitignore'
-
-  'vim/vimrc'
-  'vim/vimrc.encrypted'
 )
 
 link() {
