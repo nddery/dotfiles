@@ -1,15 +1,27 @@
-vim.keymap.set('n', '<space>', ':')
-vim.keymap.set('i', 'jj', '<esc>')
+vim.keymap.set("n", "<space>", ":")
+vim.keymap.set("i", "jj", "<esc>")
 
-vim.keymap.set('n', 'Y', 'y$', { desc = "Yank to end of line", remap = false })
-vim.keymap.set('i', '<C-d>', '<Del>', { desc = "Delete character under cursor" })
+vim.keymap.set("n", "Y", "y$", { desc = "Yank to end of line", remap = false })
+vim.keymap.set("i", "<C-d>", "<Del>", { desc = "Delete character under cursor" })
 
 -- Wrapped lines goes down/up to next row, rather than next line in file.
-vim.keymap.set('', 'j' , 'gj', { remap = false })
-vim.keymap.set('', 'k' , 'gk', { remap = false })
+vim.keymap.set("", "j", "gj", { remap = false })
+vim.keymap.set("", "k", "gk", { remap = false })
 
 -- Visual shifting (does not exit Visual mode)
-vim.keymap.set('v', '<', '<gv', { remap = false })
-vim.keymap.set('v', '>', '>gv', { remap = false })
+vim.keymap.set("v", "<", "<gv", { remap = false })
+vim.keymap.set("v", ">", ">gv", { remap = false })
 
-vim.keymap.set('c', 'w!!', 'w !sudo tee % >/dev/null', { desc = "Write file as root" })
+vim.keymap.set("c", "w!!", "w !sudo tee % >/dev/null", { desc = "Write file as root" })
+
+-- for init, max value, increment
+for i = 0, 9, 1 do
+	vim.keymap.set("n", "<leader>f" .. i, "<cmd>set foldlevel=" .. i .. "<cr>", { desc = "Set foldlevel to " .. i })
+end
+vim.keymap.set("n", "<leader>f-", "<cmd>set foldlevel=100<cr>", { desc = "Set foldlevel to 100" })
+
+-- vim.keymap.set("n", "<leader>jt", "<cmd>%!python -m json.tool<cr><esc><cmd>set filetype=json<cr>", { desc = "Find files" })
+
+-- Find merge conflict markers
+-- vim.keymap.set("n", "<leader>fc", "/\v^[<\|=>]{7}( .*\|$)/ %<cr>", { desc = "Find merge conflict markers" })
+-- map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
