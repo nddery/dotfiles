@@ -36,6 +36,7 @@ declare -a PACKAGES=(
 
   'yarn:--ignore-dependencies'
 
+  'lua-language-server'
 )
 
 main() {
