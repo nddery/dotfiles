@@ -19,62 +19,6 @@ return {
 	},
 
 	{
-		"akinsho/bufferline.nvim",
-		event = "VeryLazy",
-		keys = {
-			{ "<leader>bs", "<Cmd>BufferLinePick<CR>", desc = "Select a buffer", remap = true },
-			{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
-			{ "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
-		},
-		opts = function(plugin)
-			local groups = require("bufferline.groups")
-
-			return {
-				options = {
-					diagnostics = "nvim_lsp",
-					always_show_bufferline = false,
-					diagnostics_indicator = function(_, _, diag)
-						local icons = require("nddery/config").icons.diagnostics
-						local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-							.. (diag.warning and icons.Warn .. diag.warning or "")
-						return vim.trim(ret)
-					end,
-					offsets = {
-						{
-							filetype = "nerdtree",
-							text = "File explorer",
-							highlight = "Directory",
-							text_align = "left",
-						},
-					},
-					groups = {
-						options = {
-							toggle_hidden_on_enter = true, -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
-						},
-						items = {
-							groups.builtin.ungrouped,
-							{
-								name = "tests",
-								auto_close = false,
-								matcher = function(buf)
-									return buf.filename:match(".test.") or buf.filename:match(".spec.")
-								end,
-							},
-							{
-								name = " ",
-								auto_close = true,
-								matcher = function(buf)
-									return buf.path:match("node_modules") or buf.path:match("pnpm")
-								end,
-							},
-						},
-					},
-				},
-			}
-		end,
-	},
-
-	{
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		opts = function(plugin)
