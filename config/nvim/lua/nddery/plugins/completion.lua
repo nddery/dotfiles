@@ -9,29 +9,16 @@ return {
 	"github/copilot.vim",
 
 	-- -- LSP
-	-- use { "neovim/nvim-lspconfig", commit = "f11fdff7e8b5b415e5ef1837bdcdd37ea6764dda" } -- enable LSP
 	--  use { "williamboman/mason.nvim", commit = "c2002d7a6b5a72ba02388548cfaf420b864fbc12"} -- simple to use language server installer
 	--  use { "williamboman/mason-lspconfig.nvim", commit = "0051870dd728f4988110a1b2d47f4a4510213e31" }
-	-- use { "jose-elias-alvarez/null-ls.nvim", commit = "c0c19f32b614b3921e17886c541c13a72748d450" } -- for formatters and linters
-	--  use { "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" }
 
-	{ -- Collection of configurations for built-in LSP client
+	-- Collection of configurations for built-in LSP client
+	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			-- local null_ls = require('null-ls')
-			-- local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-			-- null_ls.setup({
-			--   null_ls.builtins.formatting.stylua,
-			--   null_ls.builtins.diagnostics.eslint,
-			--   null_ls.builtins.completion.spell,
-			-- })
-
 			local lspconfig = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			--
-			-- !!! adding mappings that starts with <space> leads to a 300ms delay before opening command mode
-			--
 			local opts = { noremap = true, silent = true }
 			-- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 			vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
@@ -58,37 +45,48 @@ return {
 				--   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 				-- end, bufopts)
 				-- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-				-- vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-				-- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
 				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
 				vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
 				-- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-
-				-- if client.supports_method('textDocument/formatting') then
-				--   vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-				--   vim.api.nvim_create_autocmd('BufWritePre', {
-				--     group = augroup,
-				--     buffer = bufnr,
-				--     callback = function()
-				--       -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-				--       vim.lsp.buf.formatting_sync()
-				--     end,
-				--   })
-				-- end
 			end
 
-			-- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-			local servers = { "rust_analyzer", "tsserver" }
+			local servers = { "tsserver", "jsonls", "rust_analyzer", "lua_lsp" }
 			for _, lsp in ipairs(servers) do
 				lspconfig[lsp].setup({
 					on_attach = on_attach,
-					-- Add additional capabilities supported by nvim-cmp
 					capabilities = capabilities,
+					settings = {
+						tsserver = {
+							format = { enable = false },
+						},
+						json = {
+							schemas = require("schemastore").json.schemas(),
+							validate = { enable = true },
+						},
+						Lua = {
+							runtime = {
+								version = "LuaJIT",
+								path = vim.split(package.path, ";"),
+							},
+							diagnostics = {
+								globals = { "vim" },
+							},
+							workspace = {
+								library = {
+									[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+									[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+								},
+							},
+						},
+					},
 				})
 			end
 		end,
 	},
-	{ -- Autocompletion plugin
+
+	-- Autocompletion plugin
+	{
 		"hrsh7th/nvim-cmp",
 		config = function()
 			local cmp = require("cmp")
@@ -136,21 +134,42 @@ return {
 		end,
 	},
 
-	{ -- for formatters and linters
+	-- for formatters and linters
+	{
 		"jose-elias-alvarez/null-ls.nvim",
 		version = false,
-		-- setup = function()
-		--   local null_ls = require('null-ls')
-		--
-		--   null_ls.setup({
-		--     sources = {
-		--       null_ls.builtins.completion.spell,
-		--       null_ls.builtins.diagnostics.eslint,
-		--       null_ls.builtins.formatting.prettier,
-		--       null_ls.builtins.formatting.stylua,
-		--     }
-		--   })
-		-- end
+		config = function()
+			local null_ls = require("null-ls")
+
+			null_ls.setup({
+				sources = {
+					null_ls.builtins.code_actions.eslint,
+					null_ls.builtins.completion.spell,
+					null_ls.builtins.diagnostics.eslint,
+					null_ls.builtins.formatting.prettier,
+					null_ls.builtins.formatting.stylua,
+				},
+				on_attach = function(client, bufnr)
+					local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = false })
+
+					if client.supports_method("textDocument/formatting") then
+						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+						vim.api.nvim_create_autocmd("BufWritePre", {
+							group = augroup,
+							buffer = bufnr,
+							callback = function()
+								vim.lsp.buf.format({
+									bufnr = bufnr,
+									filter = function(client)
+										return client.name == "null-ls"
+									end,
+								})
+							end,
+						})
+					end
+				end,
+			})
+		end,
 		dependenies = {
 			{ "nvim-lua/plenary.nvim" },
 		},

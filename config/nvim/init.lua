@@ -26,35 +26,3 @@ require("lazy").setup("nddery/plugins", {
 require("nddery/options")
 require("nddery/keymaps")
 require("nddery/backups")
-
--- figure out why this can't be in the lazy.nvim setup function callback...
-local null_ls = require("null-ls")
-
-null_ls.setup({
-	sources = {
-		null_ls.builtins.code_actions.eslint,
-		null_ls.builtins.completion.spell,
-		null_ls.builtins.diagnostics.eslint,
-		null_ls.builtins.formatting.prettier,
-		null_ls.builtins.formatting.stylua,
-	},
-	on_attach = function(client, bufnr)
-		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-		if client.supports_method("textDocument/formatting") then
-			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				group = augroup,
-				buffer = bufnr,
-				callback = function()
-					vim.lsp.buf.format({
-						bufnr = buff,
-						filter = function(client)
-							return client.name == "null-ls"
-						end,
-					})
-				end,
-			})
-		end
-	end,
-})
