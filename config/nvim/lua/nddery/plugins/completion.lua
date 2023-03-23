@@ -4,9 +4,9 @@ vim.cmd([[
 ]])
 
 return {
-	-- -- + stuff from vimrc
-	-- { 'neoclide/coc.nvim', branch = 'release' },
 	"github/copilot.vim",
+
+	"b0o/schemastore.nvim",
 
 	-- -- LSP
 	--  use { "williamboman/mason.nvim", commit = "c2002d7a6b5a72ba02388548cfaf420b864fbc12"} -- simple to use language server installer
@@ -51,7 +51,7 @@ return {
 				-- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 			end
 
-			local servers = { "tsserver", "jsonls", "rust_analyzer", "lua_lsp" }
+			local servers = { "tsserver", "jsonls", "rust_analyzer", "lua_lsp", "bashls" }
 			for _, lsp in ipairs(servers) do
 				lspconfig[lsp].setup({
 					on_attach = on_attach,
@@ -67,16 +67,15 @@ return {
 						Lua = {
 							runtime = {
 								version = "LuaJIT",
-								path = vim.split(package.path, ";"),
 							},
 							diagnostics = {
 								globals = { "vim" },
 							},
 							workspace = {
-								library = {
-									[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-									[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-								},
+								library = vim.api.nvim_get_runtime_file("", true),
+							},
+							telemetry = {
+								enable = false,
 							},
 						},
 					},
@@ -128,6 +127,9 @@ return {
 				}),
 				sources = {
 					{ name = "nvim_lsp" },
+					{ name = "nvim_lua" },
+					{ name = "buffer" },
+					{ name = "path" },
 					{ name = "luasnip" },
 				},
 			})
@@ -144,7 +146,7 @@ return {
 			null_ls.setup({
 				sources = {
 					null_ls.builtins.code_actions.eslint,
-					null_ls.builtins.completion.spell,
+					-- null_ls.builtins.completion.spell,
 					null_ls.builtins.diagnostics.eslint,
 					null_ls.builtins.formatting.prettier,
 					null_ls.builtins.formatting.stylua,
