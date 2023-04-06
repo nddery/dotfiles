@@ -3,39 +3,27 @@ vim.opt.undofile = true
 vim.opt.undolevels = 1000
 vim.opt.undoreload = 10000
 
-vim.cmd([[
-  function! InitializeDirectories()
-    let parent = $HOME
-    let prefix = 'vim'
-    let dir_list = {
-      \ 'backup': 'backupdir',
-      \ 'views': 'viewdir',
-      \ 'swap': 'directory' }
+local home_directory = os.getenv("HOME")
 
-    if has('persistent_undo')
-      let dir_list['undo'] = 'undodir'
-    endif
+local directories = {
+	backup = "backupdir",
+	views = "viewdir",
+	swap = "directory",
+	undo = "undodir",
+}
 
-    let common_dir = parent . '/.' . prefix
+for directory_suffix, setting_name in pairs(directories) do
+	-- eg.: ~/.vimbackup/
+	local directory_name = ".vim" .. directory_suffix
+	local directory = home_directory .. "/" .. directory_name .. "/"
 
-    for [dirname, settingname] in items(dir_list)
-      let directory = common_dir . dirname . '/'
+	if not vim.loop.fs_stat(directory) then
+		os.execute("mkdir " .. directory)
+	end
 
-      if exists("*mkdir")
-        if !isdirectory(directory)
-          call mkdir(directory)
-        endif
-      endif
-
-      if !isdirectory(directory)
-        echo "Warning: Unable to create backup directory: " . directory
-        echo "Try: mkdir -p " . directory
-      else
-        let directory = substitute(directory, " ", "\\\\ ", "g")
-        exec "set " . settingname . "=" . directory
-      endif
-    endfor
-  endfunction
-
-  call InitializeDirectories()
-]])
+	if vim.loop.fs_stat(directory) then
+		vim.opt[setting_name] = directory
+	else
+		print("Warning: Unable to create backup directory: " .. directory)
+	end
+end

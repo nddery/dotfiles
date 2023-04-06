@@ -19,9 +19,3 @@ for i = 0, 9, 1 do
 	vim.keymap.set("n", "<leader>f" .. i, "<cmd>set foldlevel=" .. i .. "<cr>", { desc = "Set foldlevel to " .. i })
 end
 vim.keymap.set("n", "<leader>f-", "<cmd>set foldlevel=100<cr>", { desc = "Set foldlevel to 100" })
-
--- vim.keymap.set("n", "<leader>jt", "<cmd>%!python -m json.tool<cr><esc><cmd>set filetype=json<cr>", { desc = "Find files" })
-
--- Find merge conflict markers
--- vim.keymap.set("n", "<leader>fc", "/\v^[<\|=>]{7}( .*\|$)/ %<cr>", { desc = "Find merge conflict markers" })
--- map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
