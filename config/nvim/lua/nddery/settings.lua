@@ -1,3 +1,5 @@
+vim.g.mapleader = ","
+
 vim.opt.termguicolors = true
 vim.opt.timeoutlen = 300
 vim.opt.mouse = "a"
@@ -13,7 +15,6 @@ vim.opt.hidden = true -- allow buffer switching without saving
 vim.opt.iskeyword = vim.opt.iskeyword - { ".", "#", "-" } -- '.' '#' '-' are end of word designator
 vim.opt.clipboard = "unnamed"
 vim.opt.viewoptions = "cursor,folds,slash,unix"
-vim.opt.foldmethod = "syntax"
 
 vim.opt.shiftwidth = 2 -- use indents of 2 spaces
 vim.opt.expandtab = true -- tabs are spaces, not tabs
@@ -44,7 +45,10 @@ vim.opt.wildmode = { "list:longest", "full" } -- command <tab> completion, list 
 vim.opt.whichwrap = "b,s,h,l,<,>,[" -- backspace and cursor keys wrap too
 vim.opt.scrolloff = 10 -- lines before cursor is considered to have left screen
 vim.opt.scrolljump = 1 -- lines to scroll when cursor leaves screen
-vim.opt.foldenable = true -- auto fold code
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = true
 vim.opt.foldlevelstart = 100
 
 -- disables netrw

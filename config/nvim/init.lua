@@ -1,5 +1,4 @@
--- Make sure to set `mapleader` before lazy so your mappings are correct
-vim.g.mapleader = ","
+require("nddery/settings")
 
 -- Initialize lazy.nvim package manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -23,6 +22,5 @@ require("lazy").setup("nddery/plugins", {
 	},
 })
 
-require("nddery/options")
 require("nddery/keymaps")
 require("nddery/backups")
