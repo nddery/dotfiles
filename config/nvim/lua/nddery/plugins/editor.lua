@@ -31,6 +31,7 @@ return {
 
 			telescope.setup({
 				defaults = {
+					path_display = { "smart" },
 					mappings = {
 						n = {
 							["<c-d>"] = actions.delete_buffer,
