@@ -31,10 +31,6 @@ function play_on_roku () {
     --data-urlencode "u=$1"
 }
 
-function update_vim_plugins () {
-  nvim +PlugUpgrade +PlugUpdate +PlugClean +CocUpdate
-}
-
 function reset_logi_mx () {
   PID=`ps aux | grep -i 'MacOS/logioptionsplus_agent' | grep 'launchd' | awk '{print $2}'`
   kill -9 $PID
