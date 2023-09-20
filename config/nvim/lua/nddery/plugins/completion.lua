@@ -57,6 +57,9 @@ return {
 					on_attach = on_attach,
 					capabilities = capabilities,
 					settings = {
+						eslint = {
+							format = false,
+						},
 						tsserver = {
 							format = { enable = false },
 						},
