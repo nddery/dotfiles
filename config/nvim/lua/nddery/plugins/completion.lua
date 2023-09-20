@@ -51,7 +51,7 @@ return {
 				-- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 			end
 
-			local servers = { "tsserver", "jsonls", "rust_analyzer", "lua_lsp", "bashls" }
+			local servers = { "eslint", "tsserver", "jsonls", "rust_analyzer", "lua_lsp", "bashls" }
 			for _, lsp in ipairs(servers) do
 				lspconfig[lsp].setup({
 					on_attach = on_attach,
@@ -145,10 +145,8 @@ return {
 
 			null_ls.setup({
 				sources = {
-					null_ls.builtins.code_actions.eslint,
-					-- null_ls.builtins.completion.spell,
-					null_ls.builtins.diagnostics.eslint,
-					null_ls.builtins.formatting.prettier,
+					null_ls.builtins.code_actions.eslint_d,
+					null_ls.builtins.formatting.prettierd,
 					null_ls.builtins.formatting.stylua,
 				},
 				on_attach = function(client, bufnr)
