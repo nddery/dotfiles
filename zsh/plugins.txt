@@ -1,4 +1,4 @@
-mafredri/zsh-async
+mafredri/zsh-async branch:main
 sindresorhus/pure branch:main
 rupa/z
 garabik/grc
