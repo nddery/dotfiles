@@ -35,6 +35,8 @@ return {
 	"tpope/vim-fugitive",
 	"tpope/vim-surround",
 
+	"windwp/nvim-ts-autotag",
+
 	{
 		"Yggdroot/indentLine",
 		config = function()
