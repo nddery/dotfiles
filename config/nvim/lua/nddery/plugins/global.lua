@@ -11,6 +11,7 @@ return {
 				mappings = {
 					comment = "<leader>c",
 					comment_line = "<leader>c",
+					comment_visual = "<leader>c",
 				},
 			})
 			-- require('mini.completion').setup({})
