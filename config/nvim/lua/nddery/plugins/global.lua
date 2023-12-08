@@ -65,7 +65,13 @@ return {
 	},
 	"rhysd/conflict-marker.vim",
 
-	"easymotion/vim-easymotion",
+	{
+		"easymotion/vim-easymotion",
+		config = function()
+			vim.keymap.set("n", "/", "<Plug>(easymotion-sn)", { silent = true })
+			vim.keymap.set("o", "/", "<Plug>(easymotion-tn)", { silent = true })
+		end,
+	},
 	"justinmk/vim-sneak",
 
 	-- Language support (highlighting and indentation) {
