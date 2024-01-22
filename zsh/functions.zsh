@@ -1,9 +1,10 @@
 function change_color_scheme () {
+    # "s/colors: \*.*/colors: \*$1/" \
   gsed \
     -i \
     --follow-symlinks \
-    "s/colors: \*.*/colors: \*$1/" \
-    $HOME/.config/alacritty/alacritty.yml
+    "s/~\/.config\/alacritty\/colors\/\b.*.toml/~\/.config\/alacritty\/colors\/$1.toml/" \
+    $HOME/.config/alacritty/alacritty.toml
 
   gsed \
     -i \
