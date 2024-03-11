@@ -1,10 +1,7 @@
 return {
-	-- dependencies of telescope below,
-	-- but not installing through `dependencies` alone...
+	-- fuzzy finder
 	{ "nvim-lua/plenary.nvim", lazy = true },
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make", lazy = true },
-
-	-- fuzzy finder
 	{
 		"nvim-telescope/telescope.nvim",
 		cmd = "Telescope",
@@ -45,9 +42,9 @@ return {
 			})
 			telescope.load_extension("fzf")
 		end,
-		dependenies = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope-fzf-native.nvim",
 		},
 	},
 }

@@ -51,7 +51,7 @@ return {
 				-- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 			end
 
-			local servers = { "eslint", "tsserver", "jsonls", "rust_analyzer", "lua_lsp", "bashls" }
+			local servers = { "eslint", "tsserver", "jsonls", "rust_analyzer", "lua_ls", "bashls" }
 			for _, lsp in ipairs(servers) do
 				lspconfig[lsp].setup({
 					on_attach = on_attach,
@@ -88,6 +88,12 @@ return {
 	},
 
 	-- Autocompletion plugin
+	{ "hrsh7th/cmp-buffer", lazy = true }, -- buffer completions
+	{ "hrsh7th/cmp-path", lazy = true }, -- path completions
+	{ "hrsh7th/cmp-nvim-lsp", lazy = true }, -- LSP source for nvim-cmp
+	{ "hrsh7th/cmp-nvim-lua", lazy = true }, -- Lua source for nvim-cmp
+	{ "saadparwaiz1/cmp_luasnip", lazy = true }, -- Snippets source for nvim-cmp
+	{ "L3MON4D3/LuaSnip", lazy = true }, -- Snippets plugin
 	{
 		"hrsh7th/nvim-cmp",
 		config = function()
@@ -137,9 +143,18 @@ return {
 				},
 			})
 		end,
+    dependencies = {
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lua",
+      "saadparwaiz1/cmp_luasnip",
+      "L3MON4D3/LuaSnip",
+    },
 	},
 
-	-- for formatters and linters
+  { "nvim-lua/plenary.nvim", lazy = true },
+  { "nvimtools/none-ls-extras.nvim", lazy = true },
 	{
 		"nvimtools/none-ls.nvim",
 		version = false,
@@ -148,7 +163,7 @@ return {
 
 			null_ls.setup({
 				sources = {
-					null_ls.builtins.code_actions.eslint_d,
+					require("none-ls.code_actions.eslint_d"),
 					null_ls.builtins.formatting.prettierd,
 					null_ls.builtins.formatting.stylua,
 				},
@@ -174,14 +189,9 @@ return {
 			})
 		end,
 		dependenies = {
-			{ "nvim-lua/plenary.nvim" },
+			"nvim-lua/plenary.nvim",
+      "nvimtools/none-ls-extras.nvim",
 		},
 	},
 
-	"hrsh7th/cmp-buffer", -- buffer completions
-	"hrsh7th/cmp-path", -- path completions
-	"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
-	"hrsh7th/cmp-nvim-lua", -- Lua source for nvim-cmp
-	"saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
-	"L3MON4D3/LuaSnip", -- Snippets plugin
 }

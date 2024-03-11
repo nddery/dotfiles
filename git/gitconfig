@@ -1,5 +1,5 @@
 [user]
-	name = Nicolas Duvieusart Déry
+	name = Nicolas
 	email = nddery@gmail.com
 	signingkey = 687F56B105B1385D
 
@@ -71,9 +71,10 @@
 [help]
   autocorrect = 1
 [filter "lfs"]
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
   required = true
+	process = git-lfs filter-process
 [commit]
 	gpgsign = true
 [init]
