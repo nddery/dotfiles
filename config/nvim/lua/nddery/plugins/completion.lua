@@ -188,7 +188,7 @@ return {
 				end,
 			})
 		end,
-		dependenies = {
+		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvimtools/none-ls-extras.nvim",
 		},
