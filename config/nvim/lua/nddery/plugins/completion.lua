@@ -143,18 +143,18 @@ return {
 				},
 			})
 		end,
-    dependencies = {
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-nvim-lua",
-      "saadparwaiz1/cmp_luasnip",
-      "L3MON4D3/LuaSnip",
-    },
+		dependencies = {
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lua",
+			"saadparwaiz1/cmp_luasnip",
+			"L3MON4D3/LuaSnip",
+		},
 	},
 
-  { "nvim-lua/plenary.nvim", lazy = true },
-  { "nvimtools/none-ls-extras.nvim", lazy = true },
+	{ "nvim-lua/plenary.nvim", lazy = true },
+	{ "nvimtools/none-ls-extras.nvim", lazy = true },
 	{
 		"nvimtools/none-ls.nvim",
 		version = false,
@@ -190,7 +190,7 @@ return {
 		end,
 		dependenies = {
 			"nvim-lua/plenary.nvim",
-      "nvimtools/none-ls-extras.nvim",
+			"nvimtools/none-ls-extras.nvim",
 		},
 	},
 
