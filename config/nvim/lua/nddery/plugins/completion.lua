@@ -164,28 +164,7 @@ return {
 			null_ls.setup({
 				sources = {
 					require("none-ls.code_actions.eslint_d"),
-					null_ls.builtins.formatting.prettierd,
-					null_ls.builtins.formatting.stylua,
 				},
-				on_attach = function(client, bufnr)
-					local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = false })
-
-					if client.supports_method("textDocument/formatting") then
-						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-						vim.api.nvim_create_autocmd("BufWritePre", {
-							group = augroup,
-							buffer = bufnr,
-							callback = function()
-								vim.lsp.buf.format({
-									bufnr = bufnr,
-									filter = function(client)
-										return client.name == "null-ls"
-									end,
-								})
-							end,
-						})
-					end
-				end,
 			})
 		end,
 		dependencies = {
