@@ -1,11 +1,4 @@
-vim.cmd([[
-  imap <silent><script><expr> <S-CR> copilot#Accept("\<CR>")
-  let g:copilot_no_tab_map = v:true
-]])
-
 return {
-	"github/copilot.vim",
-
 	"b0o/schemastore.nvim",
 
 	-- -- LSP
