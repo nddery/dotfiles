@@ -1,5 +1,3 @@
-local indentSymbol = "│"
-
 return {
 	{
 		"echasnovski/mini.nvim",
@@ -17,12 +15,6 @@ return {
 			-- require('mini.completion').setup({})
 			require("mini.cursorword").setup({})
 
-			local indentscope = require("mini.indentscope")
-			indentscope.setup({
-				symbol = indentSymbol,
-				draw = { animation = indentscope.gen_animation.none() },
-			})
-
 			local misc = require("mini.misc")
 			misc.setup_restore_cursor()
 
@@ -36,13 +28,14 @@ return {
 	"tpope/vim-fugitive",
 	"tpope/vim-surround",
 
-	"windwp/nvim-ts-autotag",
-
 	{
-		"Yggdroot/indentLine",
-		config = function()
-			vim.g.indentLine_char = indentSymbol
-		end,
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		opts = {
+			indent = {
+				char = "│",
+			},
+		},
 	},
 
 	{
@@ -64,6 +57,7 @@ return {
 		end,
 	},
 	"rhysd/conflict-marker.vim",
+	"LunarVim/bigfile.nvim",
 
 	{
 		"easymotion/vim-easymotion",
@@ -76,7 +70,7 @@ return {
 
 	-- Language support (highlighting and indentation) {
 	-- 'sheerun/vim-polyglot',
-	"jasdel/vim-smithy",
+	{ "jasdel/vim-smithy", ft = "smithy" },
 	{ "darfink/vim-plist", ft = "plist" },
 	-- }
 

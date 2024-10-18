@@ -22,7 +22,7 @@ vim.opt.tabstop = 2 -- an indentation every two columns
 vim.opt.softtabstop = 2 -- let backspace delete indent
 vim.opt.splitright = true -- puts new vsplit windows to the right of the current
 vim.opt.splitbelow = true -- puts new split windows to the bottom of the current
-vim.opt.pastetoggle = "<F12>" -- pastetoggle (sane indentation on pastes)
+-- vim.opt.pastetoggle = "<F12>" -- pastetoggle (sane indentation on pastes)
 
 vim.opt.showmode = true -- display the current mode
 vim.opt.cursorline = true -- highlight current line
