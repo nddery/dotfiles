@@ -78,6 +78,11 @@ return {
 								enable = false,
 							},
 						},
+						["rust-analyzer"] = {
+							diagnostics = {
+								enable = false,
+							},
+						},
 					},
 				})
 			end

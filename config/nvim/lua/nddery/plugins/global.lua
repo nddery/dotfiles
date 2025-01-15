@@ -12,7 +12,6 @@ return {
 					comment_visual = "<leader>c",
 				},
 			})
-			-- require('mini.completion').setup({})
 			require("mini.cursorword").setup({})
 
 			local misc = require("mini.misc")
