@@ -1,5 +1,4 @@
 function change_color_scheme () {
-    # "s/colors: \*.*/colors: \*$1/" \
   gsed \
     -i \
     --follow-symlinks \

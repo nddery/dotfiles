@@ -23,3 +23,5 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"

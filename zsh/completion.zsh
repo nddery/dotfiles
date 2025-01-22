@@ -1,6 +1,7 @@
 autoload -U compinit && compinit
 zstyle ':completion:*' menu select=1 _complete _ignored _approximate # highlight current selection
 zstyle ':completion:*:functions' ignored-patterns '_*' # ignore completion functions
+
 ###-begin-npm-completion-###
 #
 # npm command completion script
@@ -8,7 +9,6 @@ zstyle ':completion:*:functions' ignored-patterns '_*' # ignore completion funct
 # Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
 # Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
 #
-
 if type complete &>/dev/null; then
   _npm_completion () {
     local words cword
@@ -20,11 +20,15 @@ if type complete &>/dev/null; then
     fi
 
     local si="$IFS"
-    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$cword" \
+    if ! IFS=$'\n' COMPREPLY=($(COMP_CWORD="$cword" \
                            COMP_LINE="$COMP_LINE" \
                            COMP_POINT="$COMP_POINT" \
                            npm completion -- "${words[@]}" \
-                           2>/dev/null)) || return $?
+                           2>/dev/null)); then
+      local ret=$?
+      IFS="$si"
+      return $ret
+    fi
     IFS="$si"
     if type __ltrim_colon_completions &>/dev/null; then
       __ltrim_colon_completions "${words[cword]}"
@@ -51,13 +55,37 @@ elif type compctl &>/dev/null; then
     read -l line
     read -ln point
     si="$IFS"
-    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
+    if ! IFS=$'\n' reply=($(COMP_CWORD="$cword" \
                        COMP_LINE="$line" \
                        COMP_POINT="$point" \
                        npm completion -- "${words[@]}" \
-                       2>/dev/null)) || return $?
+                       2>/dev/null)); then
+
+      local ret=$?
+      IFS="$si"
+      return $ret
+    fi
     IFS="$si"
   }
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+
+###-begin-pnpm-completion-###
+if type compdef &>/dev/null; then
+  _pnpm_completion () {
+    local reply
+    local si=$IFS
+
+    IFS=$'\n' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" SHELL=zsh pnpm completion-server -- "${words[@]}"))
+    IFS=$si
+
+    if [ "$reply" = "__tabtab_complete_files__" ]; then
+      _files
+    else
+      _describe 'values' reply
+    fi
+  }
+  compdef _pnpm_completion pnpm
+fi
+###-end-pnpm-completion-###
