@@ -32,7 +32,6 @@ return {
 			auto_install = true,
 			autotag = { enable = true },
 			highlight = { enable = true },
-			ignore_install = {},
 			modules = {},
 			indent = { enable = true, disable = { "python" } },
 			context_commentstring = { enable = true, enable_autocmd = false },
@@ -57,6 +56,7 @@ return {
 				"vim",
 				"yaml",
 			},
+			ignore_install = { "help" },
 			incremental_selection = {
 				enable = true,
 				keymaps = {
