@@ -1,4 +1,16 @@
 return {
+	-- {
+	-- 	"nvim-tree/nvim-tree.lua",
+	-- 	dependencies = {
+	-- 		"nvim-tree/nvim-web-devicons",
+	-- 	},
+	-- 	keys = {
+	-- 		{ "<C-e>", "<cmd>NvimTreeToggle<cr>", desc = "NvimTree toggle" },
+	-- 	},
+	-- 	config = function()
+	-- 		require("nvim-tree").setup({})
+	-- 	end,
+	-- },
 	{
 		"scrooloose/nerdtree",
 		keys = {

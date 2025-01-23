@@ -1,0 +1,30 @@
+return {
+	-- "williamboman/mason.nvim",
+	-- dependencies = {
+	-- 	"williamboman/mason-lspconfig.nvim",
+	-- 	"WhoIsSethDaniel/mason-tool-installer.nvim",
+	-- },
+	-- config = function()
+	-- 	require("mason").setup()
+	--
+	-- 	require("mason-lspconfig").setup({
+	-- 		ensure_installed = {
+	-- 			"tsserver",
+	-- 			"jsonls",
+	-- 			"rust_analyzer",
+	-- 			"lua_ls",
+	-- 			"bashls",
+	-- 			"cssls",
+	-- 		},
+	-- 		automatic_installation = true,
+	-- 	})
+	--
+	-- 	require("mason-tool-installer").setup({
+	-- 		ensure_instaled = {
+	-- 			"prettier",
+	-- 			"eslint_d",
+	-- 			"stylua",
+	-- 		},
+	-- 	})
+	-- end,
+}

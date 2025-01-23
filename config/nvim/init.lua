@@ -16,7 +16,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("nddery/plugins", {
+require("lazy").setup({ { import = "nddery/plugins" }, { import = "nddery/plugins/lsp" } }, {
 	change_detection = {
 		notify = false,
 	},
