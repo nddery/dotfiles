@@ -15,7 +15,7 @@ declare -a PACKAGES=(
 
   'ack'
   'fzf'
-  'getantibody/tap/antibody'
+  'antidote'
   'git'
   'gnupg'
   'grc'
@@ -32,9 +32,7 @@ declare -a PACKAGES=(
   'zsh'
 
   'neovim'
-  'vim:--override-system-vi'
-
-  'yarn:--ignore-dependencies'
+  'vim'
 
   'lua-language-server'
 )

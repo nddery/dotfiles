@@ -73,17 +73,6 @@ fi
 
 ###
 
-ask_for_confirmation 'Install/Update misc (vim-plug, ...) ?'
-printf '\n'
-
-if answer_is_yes; then
-  print_info 'Install/Update misc'
-  ./installs/misc.sh
-  print_in_green '\n  ---\n\n'
-fi
-
-###
-
 ask_for_confirmation 'Symlink dotfiles into place ?'
 printf '\n'
 

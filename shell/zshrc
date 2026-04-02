@@ -5,7 +5,9 @@ source $DOTFILES/zsh/bindkeys.zsh
 source $DOTFILES/zsh/completion.zsh
 source $DOTFILES/zsh/functions.zsh
 source $DOTFILES/zsh/history.zsh
-source $DOTFILES/zsh/plugins.zsh
+
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
+antidote load ${DOTFILES}/zsh/plugins.txt
 
 if [ -f ~/.zshlocalrc ]; then
   source ~/.zshlocalrc

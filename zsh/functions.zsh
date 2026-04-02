@@ -10,6 +10,19 @@ function change_color_scheme () {
     --follow-symlinks \
     "s/vim.opt.background = \".*\"/vim.opt.background = \"$1\"/" \
     $HOME/.config/nvim/lua/nddery/plugins/colorscheme.lua
+
+  case "$1" in
+   light) vsCodeColorTheme="GitHub Light" ;;
+   *)     vsCodeColorTheme="Night Owl" ;;
+   # light) vsCodeColorTheme="Quiet Light" ;;
+   # *)     vsCodeColorTheme="Material Theme Palenight High Contrast" ;;
+  esac
+
+  gsed \
+    -i \
+    --follow-symlinks \
+    "s/  \"workbench.colorTheme\": \".*\"/  \"workbench.colorTheme\": \"$vsCodeColorTheme\"/" \
+    $HOME/Library/Application\ Support/Code\ -\ Insiders/User/settings.json
 }
 
 function clean_vim_directories() {
