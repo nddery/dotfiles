@@ -13,8 +13,7 @@ if [ -f ~/.zshlocalrc ]; then
   source ~/.zshlocalrc
 fi;
 
-[ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
-# eval "$(rbenv init -)"
+[ -x "$(command -v fzf)" ] && source <(fzf --zsh)
 
 ulimit -S -n 2048
 

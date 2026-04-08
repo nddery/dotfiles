@@ -30,6 +30,7 @@ declare -a PACKAGES=(
   'wget:--enable-iri'
   'z'
   'zsh'
+  'fzf'
 
   'neovim'
   'vim'
