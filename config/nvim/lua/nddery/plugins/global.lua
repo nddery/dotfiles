@@ -67,13 +67,28 @@ return {
 	"LunarVim/bigfile.nvim",
 
 	{
-		"easymotion/vim-easymotion",
-		config = function()
-			vim.keymap.set("n", "/", "<Plug>(easymotion-sn)", { silent = true })
-			vim.keymap.set("o", "/", "<Plug>(easymotion-tn)", { silent = true })
-		end,
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {},
+		keys = {
+			{
+				"s",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+			{
+				"S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+		},
 	},
-	"justinmk/vim-sneak",
 
 	-- Language support (highlighting and indentation) {
 	-- 'sheerun/vim-polyglot',
