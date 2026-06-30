@@ -61,11 +61,4 @@ return {
 			"rafamadriz/friendly-snippets",
 		},
 	},
-
-	-- { "hrsh7th/cmp-buffer", lazy = true }, -- buffer completions
-	-- { "hrsh7th/cmp-path", lazy = true }, -- path completions
-	-- { "hrsh7th/cmp-nvim-lsp", lazy = true }, -- LSP source for nvim-cmp
-	-- { "hrsh7th/cmp-nvim-lua", lazy = true }, -- Lua source for nvim-cmp
-	-- { "saadparwaiz1/cmp_luasnip", lazy = true }, -- Snippets source for nvim-cmp
-	-- { "L3MON4D3/LuaSnip", lazy = true }, -- Snippets plugin
 }
