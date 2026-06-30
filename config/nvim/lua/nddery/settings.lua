@@ -47,7 +47,7 @@ vim.opt.scrolloff = 10 -- lines before cursor is considered to have left screen
 vim.opt.scrolljump = 1 -- lines to scroll when cursor leaves screen
 
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldenable = true
 vim.opt.foldlevelstart = 100
 
