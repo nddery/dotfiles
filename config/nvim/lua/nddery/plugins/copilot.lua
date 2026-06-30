@@ -4,6 +4,7 @@ return {
 	event = "InsertEnter",
 	config = function()
 		require("copilot").setup({
+			server = { type = "binary" },
 			panel = { enabled = false },
 			suggestion = {
 				enabled = true,
