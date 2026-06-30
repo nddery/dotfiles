@@ -1,16 +1,20 @@
 return {
-	"github/copilot.vim",
-	init = function()
-		vim.g.copilot_no_tab_map = true
-		vim.g.copilot_workspace_folders = { vim.fn.getcwd() }
-	end,
+	"zbirenbaum/copilot.lua",
+	cmd = "Copilot",
+	event = "InsertEnter",
 	config = function()
-		vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("\\<CR>")', {
-			expr = true,
-			replace_keycodes = false,
+		require("copilot").setup({
+			panel = { enabled = false },
+			suggestion = {
+				enabled = true,
+				auto_trigger = true,
+				keymap = {
+					accept = "<C-J>",
+					next = "<C-]>",
+					prev = "<C-[>",
+					dismiss = "<C-\\>",
+				},
+			},
 		})
-
-		vim.api.nvim_set_keymap("i", "<C-[>", "<Plug>(copilot-previous)", {})
-		vim.api.nvim_set_keymap("i", "<C-]>", "<Plug>(copilot-next)", {})
 	end,
 }
