@@ -1,33 +1,16 @@
 return {
-	-- {
-	-- 	"nvim-tree/nvim-tree.lua",
-	-- 	dependencies = {
-	-- 		"nvim-tree/nvim-web-devicons",
-	-- 	},
-	-- 	keys = {
-	-- 		{ "<C-e>", "<cmd>NvimTreeToggle<cr>", desc = "NvimTree toggle" },
-	-- 	},
-	-- 	config = function()
-	-- 		require("nvim-tree").setup({})
-	-- 	end,
-	-- },
 	{
-		"scrooloose/nerdtree",
-		keys = {
-			{ "<C-e>", "<cmd>NERDTreeToggle<cr>", desc = "NERDTree toggle" },
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+			"MunifTanjim/nui.nvim",
 		},
-		config = function()
-			vim.cmd([[
-	       let NERDTreeShowBookmarks=1
-	       let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', '\.DS_Store$']
-	       let NERDTreeChDirMode=0
-	       let NERDTreeMouseMode=2
-	       let NERDTreeShowHidden=1
-	       let NERDTreeKeepTreeInNewTab=1
-	       let NERDTreeWinSize=40
-	       " let g:nerdtree_tabs_open_on_gui_startup=0
-	     ]])
-		end,
+		keys = {
+			{ "<C-e>", "<cmd>Neotree toggle<cr>", desc = "Explorer toggle" },
+		},
+		opts = {},
 	},
 
 	{
@@ -38,9 +21,9 @@ return {
 
 			local function fg(name)
 				return function()
-					---@type {foreground?:number}?
-					local hl = vim.api.nvim_get_hl_by_name(name, true)
-					return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
+					local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
+					local color = hl and hl.fg
+					return color and { fg = string.format("#%06x", color) }
 				end
 			end
 
@@ -77,24 +60,6 @@ return {
 						},
 					},
 					lualine_x = {
-						{
-							function()
-								return require("noice").api.status.command.get()
-							end,
-							cond = function()
-								return package.loaded["noice"] and require("noice").api.status.command.has()
-							end,
-							color = fg("Statement"),
-						},
-						{
-							function()
-								return require("noice").api.status.mode.get()
-							end,
-							cond = function()
-								return package.loaded["noice"] and require("noice").api.status.mode.has()
-							end,
-							color = fg("Constant"),
-						},
 						{
 							require("lazy.status").updates,
 							cond = require("lazy.status").has_updates,
