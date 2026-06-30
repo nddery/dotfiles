@@ -1,45 +1,17 @@
 return {
-	"nvim-treesitter/nvim-treesitter",
-	version = false, -- last release is way too old and doesn't work on Windows
-	build = ":TSUpdate",
-	event = { "BufReadPost", "BufNewFile" },
-	dependencies = {
-		"windwp/nvim-ts-autotag",
-		{
-			"nvim-treesitter/nvim-treesitter-textobjects",
-			init = function()
-				-- PERF: no need to load the plugin, if we only need its queries for mini.ai
-				local plugin = require("lazy.core.config").spec.plugins["nvim-treesitter"]
-				local opts = require("lazy.core.plugin").values(plugin, "opts", false)
-				local enabled = false
-				if opts.textobjects then
-					for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
-						if opts.textobjects[mod] and opts.textobjects[mod].enable then
-							enabled = true
-							break
-						end
-					end
-				end
-				if not enabled then
-					require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
-				end
-			end,
-		},
-	},
-	config = function()
-		require("nvim-treesitter.configs").setup({
-			sync_install = false,
-			auto_install = true,
-			autotag = { enable = true },
-			highlight = { enable = true },
-			modules = {},
-			indent = { enable = true, disable = { "python" } },
-			context_commentstring = { enable = true, enable_autocmd = false },
-			ensure_installed = {
+	{
+		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		lazy = false, -- the main branch does not support lazy-loading
+		build = ":TSUpdate",
+		config = function()
+			require("nvim-treesitter").setup()
+
+			-- Install parsers (async; a no-op for already-installed ones).
+			require("nvim-treesitter").install({
 				"astro",
 				"bash",
 				"c",
-				"help",
 				"vimdoc",
 				"html",
 				"javascript",
@@ -55,17 +27,43 @@ return {
 				"typescript",
 				"vim",
 				"yaml",
-			},
-			ignore_install = { "help" },
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<C-space>",
-					node_incremental = "<C-space>",
-					scope_incremental = "<nop>",
-					node_decremental = "<bs>",
-				},
-			},
-		})
-	end,
+			})
+
+			-- The main branch no longer enables features through setup(); highlight
+			-- and indentation are wired up per buffer via Neovim's own treesitter.
+			vim.api.nvim_create_autocmd("FileType", {
+				group = vim.api.nvim_create_augroup("nddery-treesitter", { clear = true }),
+				callback = function(args)
+					-- start() errors when no parser is installed for this filetype.
+					if not pcall(vim.treesitter.start) then
+						return
+					end
+					-- Indentation is experimental; keep it off for python to match
+					-- the previous indent.disable config.
+					if vim.bo[args.buf].filetype ~= "python" then
+						vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					end
+				end,
+			})
+		end,
+	},
+
+	{
+		"windwp/nvim-ts-autotag",
+		ft = {
+			"html",
+			"javascript",
+			"javascriptreact",
+			"typescript",
+			"typescriptreact",
+			"astro",
+			"markdown",
+			"svelte",
+			"vue",
+			"xml",
+		},
+		config = function()
+			require("nvim-ts-autotag").setup()
+		end,
+	},
 }
