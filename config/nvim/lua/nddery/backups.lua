@@ -14,16 +14,13 @@ local directories = {
 
 for directory_suffix, setting_name in pairs(directories) do
 	-- eg.: ~/.vimbackup/
-	local directory_name = ".vim" .. directory_suffix
-	local directory = home_directory .. "/" .. directory_name .. "/"
+	local directory = home_directory .. "/.vim" .. directory_suffix .. "/"
 
-	if not vim.loop.fs_stat(directory) then
-		os.execute("mkdir " .. directory)
-	end
+	vim.fn.mkdir(directory, "p")
 
-	if vim.loop.fs_stat(directory) then
+	if vim.uv.fs_stat(directory) then
 		vim.opt[setting_name] = directory
 	else
-		print("Warning: Unable to create backup directory: " .. directory)
+		vim.notify("Unable to create backup directory: " .. directory, vim.log.levels.WARN)
 	end
 end
