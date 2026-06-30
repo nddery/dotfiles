@@ -33,6 +33,10 @@ require("lazy").setup({ { import = "nddery/plugins" }, { import = "nddery/plugin
 	change_detection = {
 		notify = false,
 	},
+	-- No plugin uses luarocks; disabling it keeps :checkhealth lazy clean.
+	rocks = {
+		enabled = false,
+	},
 })
 
 require("nddery/keymaps")
