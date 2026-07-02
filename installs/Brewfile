@@ -59,4 +59,6 @@ cask "quicklook-csv"
 cask "quicklook-json"
 
 # --- Fonts (homebrew/cask-fonts is deprecated; fonts live in homebrew/cask) ---
-cask "font-cascadia-code"
+# Nerd Font build — provides the "CaskaydiaCove Nerd Font" family that
+# alacritty.toml (and the nvim/tmux glyph icons) rely on.
+cask "font-caskaydia-cove-nerd-font"
