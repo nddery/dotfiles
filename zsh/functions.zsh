@@ -1,28 +1,22 @@
 function change_color_scheme () {
-  gsed \
-    -i \
-    --follow-symlinks \
-    "s/~\/.config\/alacritty\/colors\/\b.*.toml/~\/.config\/alacritty\/colors\/$1.toml/" \
-    $HOME/.config/alacritty/alacritty.toml
-
-  gsed \
-    -i \
-    --follow-symlinks \
-    "s/vim.opt.background = \".*\"/vim.opt.background = \"$1\"/" \
-    $HOME/.config/nvim/lua/nddery/plugins/colorscheme.lua
-
-  case "$1" in
-   light) vsCodeColorTheme="GitHub Light" ;;
-   *)     vsCodeColorTheme="Night Owl" ;;
-   # light) vsCodeColorTheme="Quiet Light" ;;
-   # *)     vsCodeColorTheme="Material Theme Palenight High Contrast" ;;
+  local mode="$1"
+  local vsCodeColorTheme
+  case "$mode" in
+    light) vsCodeColorTheme="GitHub Light" ;;
+    *)     vsCodeColorTheme="Night Owl" ;;
   esac
 
-  gsed \
-    -i \
-    --follow-symlinks \
-    "s/  \"workbench.colorTheme\": \".*\"/  \"workbench.colorTheme\": \"$vsCodeColorTheme\"/" \
-    $HOME/Library/Application\ Support/Code\ -\ Insiders/User/settings.json
+  # gsed edit-in-place on a symlinked config file: replace <regex> in <file>.
+  local edit=(gsed -i --follow-symlinks)
+
+  $edit "s|colors/.*\.toml|colors/$mode.toml|" \
+    "$HOME/.config/alacritty/alacritty.toml"
+
+  $edit "s/vim.opt.background = \".*\"/vim.opt.background = \"$mode\"/" \
+    "$HOME/.config/nvim/lua/nddery/plugins/colorscheme.lua"
+
+  $edit "s/\"workbench.colorTheme\": \".*\"/\"workbench.colorTheme\": \"$vsCodeColorTheme\"/" \
+    "$HOME/Library/Application Support/Code - Insiders/User/settings.json"
 }
 
 function clean_vim_directories() {
@@ -33,8 +27,7 @@ function clean_vim_directories() {
 }
 
 function update_zsh_plugins () {
-  antibody update
-  antibody bundle < $DOTFILES/zsh/plugins.txt > $DOTFILES/zsh/plugins.zsh
+  antidote update
 }
 
 function play_on_roku () {
