@@ -3,8 +3,6 @@
 source 'utils.sh'
 
 declare -a DOTFILES_TO_SYMLINK=(
-  'tern-config'
-
   'shell/tmux.conf'
   'shell/zshrc'
 
