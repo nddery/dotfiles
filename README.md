@@ -6,7 +6,7 @@ Heavily inspired by https://github.com/alrra/dotfiles
 
 ```
 $ cd dotfiles
-$ ./install
+$ ./install.sh
 ```
 
 and follow instruction.

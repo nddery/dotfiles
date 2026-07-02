@@ -1,0 +1,62 @@
+# Brewfile — the single source of truth for Homebrew packages & casks.
+#
+# Install / update everything (idempotent):
+#   brew bundle --file=installs/Brewfile
+#
+# Regenerate this file from what's currently installed:
+#   brew bundle dump --file=installs/Brewfile --force
+
+# --- GNU core utilities (the ones shipped with macOS are outdated) ---
+# Remember to add `$(brew --prefix coreutils)/libexec/gnubin` to $PATH.
+brew "coreutils"
+brew "moreutils"
+brew "findutils"   # GNU find/locate/updatedb/xargs (g-prefixed)
+brew "gnu-sed"     # gsed
+brew "gnupg"
+
+# --- CLI tools ---
+brew "antidote"    # zsh plugin manager
+brew "fzf"
+brew "git"
+brew "grc"
+brew "htop"
+brew "jq"
+brew "pinentry-mac"
+brew "rbenv"
+brew "ripgrep"     # rg — replaces ack / the_silver_searcher
+brew "tmux"
+brew "wget"
+brew "z"
+
+# --- Editors & language servers ---
+brew "neovim"
+brew "vim"
+brew "zsh"
+brew "lua-language-server"
+
+# --- Applications ---
+cask "firefox"
+cask "google-chrome"
+
+cask "alacritty"
+cask "appcleaner"
+cask "dash"
+cask "fork"
+cask "monitorcontrol"
+cask "postman"
+cask "slack"
+cask "spotify"
+cask "visual-studio-code"
+cask "vlc"
+
+# --- QuickLook plugins ---
+cask "qlcolorcode"
+cask "qlimagesize"
+cask "qlmarkdown"
+cask "qlprettypatch"
+cask "qlstephen"
+cask "quicklook-csv"
+cask "quicklook-json"
+
+# --- Fonts (homebrew/cask-fonts is deprecated; fonts live in homebrew/cask) ---
+cask "font-cascadia-code"

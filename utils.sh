@@ -1,17 +1,5 @@
 #!/usr/bin/env bash
 
-brew_install() {
-  declare -r CMD="$3"
-  declare -r FORMULA="$2"
-  declare -r FORMULA_READABLE_NAME="$1"
-
-  if brew "$CMD" list "$FORMULA" &> /dev/null; then
-    print_success "$FORMULA_READABLE_NAME"
-  else
-    execute "brew $CMD install $FORMULA" "$FORMULA_READABLE_NAME"
-  fi
-}
-
 answer_is_yes() {
   [[ "$REPLY" =~ ^[Yy]$ ]] \
     && return 0 \

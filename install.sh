@@ -5,94 +5,29 @@ source 'utils.sh'
 
 ask_for_sudo
 
-###
+# Each step is "prompt label:script to run" (relative to this directory).
+declare -a STEPS=(
+  'Install/Update Xcode:installs/xcode.sh'
+  'Install/Update homebrew:installs/homebrew.sh'
+  'Install/Update node:installs/node.sh'
+  'Install/Update brew packages & casks:installs/brew_bundle.sh'
+  'Install/Update global node modules:installs/node_modules.sh'
+  'Symlink dotfiles into place:symlinks.sh'
+  'Change shell:installs/shell.sh'
+)
 
-ask_for_confirmation 'Install/Update Xcode ?'
-printf '\n'
+for step in "${STEPS[@]}"; do
+  label="${step%%:*}"
+  script="${step#*:}"
 
-if answer_is_yes; then
-  print_info 'Install/Update Xcode'
-  ./installs/xcode.sh
-  print_in_green '\n  ---\n\n'
-fi
+  ask_for_confirmation "$label ?"
+  printf '\n'
 
-###
-
-ask_for_confirmation 'Install/Update homebrew ?'
-printf '\n'
-
-if answer_is_yes; then
-  print_info 'Install/Update homebrew'
-  ./installs/homebrew.sh
-  print_in_green '\n  ---\n\n'
-fi
-
-###
-
-ask_for_confirmation 'Install/Update node ?'
-printf '\n'
-
-if answer_is_yes; then
-  print_info 'Install/Update node'
-  ./installs/node.sh
-  print_in_green '\n  ---\n\n'
-fi
-
-###
-
-ask_for_confirmation 'Install/Update brew packages ?'
-printf '\n'
-
-if answer_is_yes; then
-  print_info 'Install/Update brew packages'
-  ./installs/brew_packages.sh
-  print_in_green '\n  ---\n\n'
-fi
-
-###
-
-ask_for_confirmation 'Install/Update brew casks ?'
-printf '\n'
-
-if answer_is_yes; then
-  print_info 'Install/Update brew casks'
-  ./installs/brew_casks.sh
-  print_in_green '\n  ---\n\n'
-fi
-
-###
-
-ask_for_confirmation 'Install/Update global node modules ?'
-printf '\n'
-
-if answer_is_yes; then
-  print_info 'Install/Update global node modules'
-  ./installs/node_modules.sh
-  print_in_green '\n  ---\n\n'
-fi
-
-###
-
-ask_for_confirmation 'Symlink dotfiles into place ?'
-printf '\n'
-
-if answer_is_yes; then
-  print_info 'Symlink dotfiles into place'
-  ./symlinks.sh
-  print_in_green '\n  ---\n\n'
-fi
-
-###
-
-ask_for_confirmation 'Change shell ?'
-printf '\n'
-
-if answer_is_yes; then
-  print_info 'Changing shell'
-  ./installs/shell.sh
-  print_in_green '\n  ---\n\n'
-fi
-
-###
+  if answer_is_yes; then
+    print_info "$label"
+    "./$script"
+    print_in_green '\n  ---\n\n'
+  fi
+done
 
 print_success "Installation finished"
