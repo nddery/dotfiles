@@ -10,7 +10,14 @@ return {
 		keys = {
 			{ "<C-e>", "<cmd>Neotree toggle<cr>", desc = "Explorer toggle" },
 		},
-		opts = {},
+		opts = {
+			filesystem = {
+				filtered_items = {
+					hide_dotfiles = false,
+					hide_gitignored = false,
+				},
+			},
+		},
 	},
 
 	{
