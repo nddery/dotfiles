@@ -27,6 +27,11 @@ else
   extra_binds=()
 fi
 
+# Reload whichever source matches the current prompt, so a refresh keeps you on
+# the view you're looking at. Triggered by f5, which tmux sends on pane-focus-in
+# (see tmux.conf) so the list is fresh every time you return to the picker.
+reload_current="case \"\$FZF_PROMPT\" in *🌐*) $all ;; *⚙*) sesh list -c --icons ;; *📁*) sesh list -z --icons ;; *) sesh list -t --icons ;; esac"
+
 while true; do
   session=$(
     $default | fzf \
@@ -35,6 +40,7 @@ while true; do
       --header "$header" \
       --bind 'tab:down,btab:up' \
       --bind 'ctrl-l:execute-silent(tmux select-pane -R)' \
+      --bind "f5:reload($reload_current)" \
       --bind "ctrl-a:change-prompt(🌐 )+reload($all)" \
       --bind 'ctrl-t:change-prompt(🪟 )+reload(sesh list -t --icons)' \
       --bind 'ctrl-g:change-prompt(⚙  )+reload(sesh list -c --icons)' \
