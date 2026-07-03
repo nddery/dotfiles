@@ -29,13 +29,14 @@ list_tmux() {
   bells=$(tmux list-sessions -f '#{m:*!*,#{session_alerts}}' -F '#{session_name}' 2>/dev/null)
   sesh list -t -j 2>/dev/null | jq -r 'sort_by(.Name | ascii_downcase) | .[] | [.Name, .Path] | @tsv' \
   | while IFS=$'\t' read -r name path; do
-      local branch marker disp bell=''
+      local branch marker disp bell='' dname
+      dname="${name%%_worktrees*}" # display just the repo (branch shows in its own column); $name stays the connect target
       branch=$(git -C "$path" symbolic-ref --short -q HEAD 2>/dev/null)
       case $'\n'"$bells"$'\n' in *$'\n'"$name"$'\n'*) bell=$' \033[33m🔔\033[0m' ;; esac
       if [ "$name" = "$cur" ]; then
-        marker=$'\033[32m▶\033[0m ' ; disp=$'\033[1;36m'"$name"$'\033[0m'
+        marker=$'\033[32m▶\033[0m ' ; disp=$'\033[1;36m'"$dname"$'\033[0m'
       else
-        marker='  ' ; disp="$name"
+        marker='  ' ; disp="$dname"
       fi
       [ -n "$branch" ] && branch=$' \033[2m '"$branch"$'\033[0m'
       printf '%s\t%s%s%s%s\n' "$name" "$marker" "$disp" "$bell" "$branch"
