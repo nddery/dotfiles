@@ -66,6 +66,16 @@ case "$1" in
         tmux send-keys -t "$p" F5
       done
     exit 0 ;;
+  --focus)
+    # focus the picker pane in the current window, or create it if there isn't one
+    win=$(tmux display-message -p '#{window_id}' 2>/dev/null)
+    pick=$(tmux list-panes -t "$win" -f '#{@sesh_picker}' -F '#{pane_id}' 2>/dev/null | head -1)
+    if [ -n "$pick" ]; then
+      tmux select-pane -t "$pick"
+    else
+      tmux split-window -hb -l 40 -t "$win" "exec $self"
+    fi
+    exit 0 ;;
 esac
 
 # ---- interactive picker ----------------------------------------------------
