@@ -62,3 +62,13 @@ ehthumbs.db
 Thumbs.db
 
 .null-ls-root
+
+
+# ----------------------------------------------------------------------
+# | Claude                                                            |
+# ----------------------------------------------------------------------
+
+.claude/settings.local.json
+.worktrees/
+docs/superpowers/
+.superpowers
