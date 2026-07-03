@@ -4,6 +4,7 @@
 #
 # Meant to live in a small tmux pane (see the hooks in tmux.conf), but works as
 # a standalone command too: run `sesh-picker` to fuzzy-pick a session.
+# Reopen a dismissed picker with the tmux binding <prefix> e.
 #
 # Subcommands (used by the picker itself and by tmux hooks):
 #   sesh-picker --list <tmux|all|config|dir>   print one view (TARGET<TAB>DISPLAY)
