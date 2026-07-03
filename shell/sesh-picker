@@ -2,49 +2,102 @@
 #
 # sesh-picker — interactive sesh session switcher.
 #
-# Meant to live in a small tmux pane (see the `session-created` hook in
-# tmux.conf), but works as a standalone command too: run `sesh-picker`
-# anywhere to fuzzy-pick a session and switch to it.
+# Meant to live in a small tmux pane (see the hooks in tmux.conf), but works as
+# a standalone command too: run `sesh-picker` to fuzzy-pick a session.
 #
-# Loops so the picker reappears after each switch. Press Esc to dismiss it
-# (which closes the pane); reopen with the tmux binding: <prefix> T.
+# Subcommands (used by the picker itself and by tmux hooks):
+#   sesh-picker --list <tmux|all|config|dir>   print one view (TARGET<TAB>DISPLAY)
+#   sesh-picker --refresh-all                  refresh on-screen picker panes
+#
+# Each list line is tab-delimited: field 1 is what `sesh connect` receives,
+# field 2 is the (colored) display. fzf shows only field 2 (--with-nth 2) and
+# strips ANSI from what it returns, so the connect target stays clean.
+
+self="$0"
+
+# ---- views -----------------------------------------------------------------
+
+dup() { awk '{ print $0 "\t" $0 }'; }   # plain views: display == connect target
+
+# Active tmux sessions, enriched: ▶ marks the current session (bold), the git
+# branch is shown dim, and 🔔 flags a session with a pending bell alert.
+list_tmux() {
+  command -v jq >/dev/null 2>&1 || { sesh list -t --icons | dup; return; }
+  local cur bells
+  cur=$(tmux display-message -p -t "${TMUX_PANE:-}" '#S' 2>/dev/null)
+  bells=$(tmux list-sessions -f '#{m:*!*,#{session_alerts}}' -F '#{session_name}' 2>/dev/null)
+  sesh list -t -j 2>/dev/null | jq -r '.[] | [.Name, .Path] | @tsv' \
+  | while IFS=$'\t' read -r name path; do
+      local branch marker disp bell=''
+      branch=$(git -C "$path" symbolic-ref --short -q HEAD 2>/dev/null)
+      case $'\n'"$bells"$'\n' in *$'\n'"$name"$'\n'*) bell=$' \033[33m🔔\033[0m' ;; esac
+      if [ "$name" = "$cur" ]; then
+        marker=$'\033[32m▶\033[0m ' ; disp=$'\033[1;36m'"$name"$'\033[0m'
+      else
+        marker='  ' ; disp="$name"
+      fi
+      [ -n "$branch" ] && branch=$' \033[2m '"$branch"$'\033[0m'
+      printf '%s\t%s%s%s%s\n' "$name" "$marker" "$disp" "$bell" "$branch"
+    done
+}
+
+list_all() {
+  { if command -v zoxide >/dev/null 2>&1; then sesh list -d --icons
+    else sesh list -t -c -d --icons; fi; } | dup
+}
+
+case "$1" in
+  --list)
+    case "$2" in
+      all)    list_all ;;
+      config) sesh list -c --icons | dup ;;
+      dir)    sesh list -z --icons | dup ;;
+      *)      list_tmux ;;
+    esac
+    exit 0 ;;
+  --refresh-all)
+    # F5 only the pickers that are actually on screen (active window of an
+    # attached session) so background panes don't churn / trip monitor-activity.
+    tmux list-panes -a \
+      -f '#{&&:#{@sesh_picker},#{&&:#{window_active},#{session_attached}}}' \
+      -F '#{pane_id}' 2>/dev/null | while read -r p; do
+        tmux send-keys -t "$p" F5
+      done
+    exit 0 ;;
+esac
+
+# ---- interactive picker ----------------------------------------------------
 
 # Mark this pane so tmux can auto-close the window once the picker is the only
 # pane left (see the window-layout-changed hook in tmux.conf).
 [ -n "$TMUX_PANE" ] && tmux set-option -p -t "$TMUX_PANE" @sesh_picker 1 2>/dev/null
 
-# Default to active (running) tmux sessions only; the fuller list is one
-# keystroke away via ^a. sesh errors if a zoxide source is requested but zoxide
-# isn't installed, so ^a's "all" view and the ^x (dirs) binding are gated on it.
-default='sesh list -t --icons'             # active tmux sessions only
 if command -v zoxide >/dev/null 2>&1; then
-  all='sesh list -d --icons'               # tmux + config + zoxide dirs, deduped
   header='^a all  ^t tmux  ^g conf  ^x dir'
-  extra_binds=(--bind 'ctrl-x:change-prompt(📁 )+reload(sesh list -z --icons)')
+  extra_binds=(--bind "ctrl-x:change-prompt(📁 )+reload($self --list dir)")
 else
-  all='sesh list -t -c -d --icons'         # tmux + config only, deduped
   header='^a all  ^t tmux  ^g conf'
   extra_binds=()
 fi
 
-# Reload whichever source matches the current prompt, so a refresh keeps you on
-# the view you're looking at. Triggered by f5, which tmux sends on pane-focus-in
-# (see tmux.conf) so the list is fresh every time you return to the picker.
-reload_current="case \"\$FZF_PROMPT\" in *🌐*) $all ;; *⚙*) sesh list -c --icons ;; *📁*) sesh list -z --icons ;; *) sesh list -t --icons ;; esac"
+# Reload the view matching the current prompt; f5 is sent by tmux on focus and
+# on session create/close (see tmux.conf), so the list stays fresh.
+reload_current="case \"\$FZF_PROMPT\" in *🌐*) $self --list all ;; *⚙*) $self --list config ;; *📁*) $self --list dir ;; *) $self --list tmux ;; esac"
 
 while true; do
-  session=$(
-    $default | fzf \
-      --ansi --no-sort --layout=reverse --border \
+  line=$(
+    "$self" --list tmux | fzf \
+      --ansi --no-sort --layout=reverse --border --delimiter '\t' --with-nth 2 \
       --border-label ' sesh ' --prompt '⚡ ' \
       --header "$header" \
       --bind 'tab:down,btab:up' \
       --bind 'ctrl-l:execute-silent(tmux select-pane -R)' \
       --bind "f5:reload($reload_current)" \
-      --bind "ctrl-a:change-prompt(🌐 )+reload($all)" \
-      --bind 'ctrl-t:change-prompt(🪟 )+reload(sesh list -t --icons)' \
-      --bind 'ctrl-g:change-prompt(⚙  )+reload(sesh list -c --icons)' \
+      --bind "ctrl-a:change-prompt(🌐 )+reload($self --list all)" \
+      --bind "ctrl-t:change-prompt(🪟 )+reload($self --list tmux)" \
+      --bind "ctrl-g:change-prompt(⚙  )+reload($self --list config)" \
       "${extra_binds[@]}"
   ) || break
-  [ -n "$session" ] && sesh connect "$session"
+  name=${line%%$'\t'*}
+  [ -n "$name" ] && sesh connect "$name"
 done
