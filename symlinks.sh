@@ -47,6 +47,9 @@ main() {
   mkdir -p $HOME/.config/nvim
   link "$(pwd)/config/nvim" "$HOME/.config/nvim"
 
+  mkdir -p $HOME/.config/sesh
+  link "$(pwd)/config/sesh/sesh.toml" "$HOME/.config/sesh/sesh.toml"
+
   # user scripts on PATH
   mkdir -p $HOME/.local/bin
   link "$(pwd)/shell/sesh-picker" "$HOME/.local/bin/sesh-picker"

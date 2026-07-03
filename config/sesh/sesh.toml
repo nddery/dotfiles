@@ -1,0 +1,44 @@
+# sesh session definitions — https://github.com/joshmedeski/sesh
+#
+# These "configured" sessions always show up under ^g in the picker (and in the
+# ^a "all" view), even before zoxide has learned the directory. Connecting to
+# one creates/attaches a tmux session rooted at `path`.
+#
+# Add `startup_command = "nvim"` (or any command) to an entry to run it the
+# first time the session is created.
+
+[[session]]
+name = "healthcare-ui"
+path = "~/Sites/healthcare-ui"
+
+[[session]]
+name = "guides-ui"
+path = "~/Sites/guides-ui"
+
+[[session]]
+name = "engine-ui"
+path = "~/Sites/engine-ui"
+
+[[session]]
+name = "edi-ui"
+path = "~/Sites/edi-ui"
+
+[[session]]
+name = "cloud-ui"
+path = "~/Sites/cloud-ui"
+
+[[session]]
+name = "dls"
+path = "~/Sites/dls"
+
+[[session]]
+name = "internal-ui"
+path = "~/Sites/internal-ui"
+
+[[session]]
+name = "marketing-ui"
+path = "~/Sites/marketing-ui"
+
+[[session]]
+name = "dotfiles"
+path = "~/Git/dotfiles"
