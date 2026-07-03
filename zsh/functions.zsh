@@ -86,3 +86,41 @@ function wt () {
 
   sesh connect "$dir"                                       # open a shell there — no Claude
 }
+
+# Remove a worktree created by wt and delete its branch — the cleanup half of
+# the workflow (`claude --worktree` does this automatically on a clean exit).
+# Safe by default: git refuses if the worktree is dirty or the branch is
+# unmerged. Pass -f to force both.
+#
+# Usage: wtrm <branch> [-f]
+function wtrm () {
+  local branch="$1" force="$2"
+  if [[ -z "$branch" ]]; then
+    print -u2 "usage: wtrm <branch> [-f]"
+    return 1
+  fi
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+    print -u2 "wtrm: not inside a git repository"
+    return 1
+  }
+
+  # locate the worktree registered for this branch (robust to naming/spaces)
+  local dir
+  dir=$(git worktree list --porcelain | awk -v b="refs/heads/$branch" '
+    /^worktree /{p=substr($0,10)} /^branch /{if($2==b){print p; exit}}')
+  if [[ -z "$dir" ]]; then
+    print -u2 "wtrm: no worktree found for branch '$branch'"
+    return 1
+  fi
+
+  # if we're standing inside it, step back to the main worktree first
+  local main
+  main=$(git worktree list --porcelain | awk '/^worktree /{print substr($0,10); exit}')
+  case "$PWD/" in "$dir"/*) cd "$main" ;; esac
+
+  if [[ "$force" == "-f" ]]; then
+    git worktree remove --force "$dir" && git branch -D "$branch"
+  else
+    git worktree remove "$dir" && git branch -d "$branch"
+  fi
+}
