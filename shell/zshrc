@@ -26,3 +26,6 @@ export FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+
+# Created by `pipx` on 2026-04-03 13:32:49
+export PATH="$PATH:/Users/nicolas/.local/bin"
