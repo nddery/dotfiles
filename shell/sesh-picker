@@ -22,11 +22,11 @@ dup() { awk '{ print $0 "\t" $0 }'; }   # plain views: display == connect target
 # Active tmux sessions, enriched: ▶ marks the current session (bold), the git
 # branch is shown dim, and 🔔 flags a session with a pending bell alert.
 list_tmux() {
-  command -v jq >/dev/null 2>&1 || { sesh list -t --icons | dup; return; }
+  command -v jq >/dev/null 2>&1 || { sesh list -t --icons | sort -f | dup; return; }
   local cur bells
   cur=$(tmux display-message -p -t "${TMUX_PANE:-}" '#S' 2>/dev/null)
   bells=$(tmux list-sessions -f '#{m:*!*,#{session_alerts}}' -F '#{session_name}' 2>/dev/null)
-  sesh list -t -j 2>/dev/null | jq -r '.[] | [.Name, .Path] | @tsv' \
+  sesh list -t -j 2>/dev/null | jq -r 'sort_by(.Name | ascii_downcase) | .[] | [.Name, .Path] | @tsv' \
   | while IFS=$'\t' read -r name path; do
       local branch marker disp bell=''
       branch=$(git -C "$path" symbolic-ref --short -q HEAD 2>/dev/null)
