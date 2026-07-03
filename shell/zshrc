@@ -15,6 +15,10 @@ fi;
 
 [ -x "$(command -v fzf)" ] && source <(fzf --zsh)
 
+# zoxide provides `z`/`zi` for jumping and feeds directory entries to sesh
+# (replaces the older rupa/z plugin).
+[ -x "$(command -v zoxide)" ] && eval "$(zoxide init zsh)"
+
 ulimit -S -n 2048
 
 export EDITOR=nvim

@@ -25,8 +25,9 @@ brew "pinentry-mac"
 brew "rbenv"
 brew "ripgrep"     # rg — replaces ack / the_silver_searcher
 brew "tmux"
+brew "sesh"
 brew "wget"
-brew "z"
+brew "zoxide"      # smarter cd (z/zi); also feeds directory entries to sesh
 
 # --- Editors & language servers ---
 brew "neovim"

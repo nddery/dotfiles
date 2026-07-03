@@ -46,6 +46,10 @@ main() {
 
   mkdir -p $HOME/.config/nvim
   link "$(pwd)/config/nvim" "$HOME/.config/nvim"
+
+  # user scripts on PATH
+  mkdir -p $HOME/.local/bin
+  link "$(pwd)/shell/sesh-picker" "$HOME/.local/bin/sesh-picker"
 }
 
 main

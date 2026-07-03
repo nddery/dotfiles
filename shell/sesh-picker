@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#
+# sesh-picker — interactive sesh session switcher.
+#
+# Meant to live in a small tmux pane (see the `session-created` hook in
+# tmux.conf), but works as a standalone command too: run `sesh-picker`
+# anywhere to fuzzy-pick a session and switch to it.
+#
+# Loops so the picker reappears after each switch. Press Esc to dismiss it
+# (which closes the pane); reopen with the tmux binding: <prefix> T.
+
+# sesh errors out if a zoxide source is requested but zoxide isn't installed,
+# so only offer directory (zoxide) entries when zoxide is actually present.
+if command -v zoxide >/dev/null 2>&1; then
+  list='sesh list --icons'                 # everything: tmux + config + zoxide dirs
+  header='^a all  ^t tmux  ^g conf  ^x dir'
+  extra_binds=(--bind 'ctrl-x:change-prompt(📁 )+reload(sesh list -z --icons)')
+else
+  list='sesh list -t -c --icons'           # tmux + config only
+  header='^a all  ^t tmux  ^g conf'
+  extra_binds=()
+fi
+
+while true; do
+  session=$(
+    $list | fzf \
+      --ansi --no-sort --layout=reverse --border \
+      --border-label ' sesh ' --prompt '⚡ ' \
+      --header "$header" \
+      --bind 'tab:down,btab:up' \
+      --bind "ctrl-a:change-prompt(⚡ )+reload($list)" \
+      --bind 'ctrl-t:change-prompt(🪟 )+reload(sesh list -t --icons)' \
+      --bind 'ctrl-g:change-prompt(⚙  )+reload(sesh list -c --icons)' \
+      "${extra_binds[@]}"
+  ) || break
+  [ -n "$session" ] && sesh connect "$session"
+done
