@@ -1,31 +1,30 @@
+# GitHub Light — matches the VS Code "GitHub Light" theme (Default palette).
+# tmux and other ANSI apps inherit these (tmux.conf is background-agnostic).
+
 [colors.primary]
-background = "0xe1e2e7"
-foreground = "0x3760bf"
+background = "0xffffff"
+foreground = "0x1f2328"
+
+[colors.cursor]
+cursor = "0x0969da"
+text = "0xffffff"
 
 [colors.normal]
-black = "0xe9e9ed"
-blue = "0x2e7de9"
-cyan = "0x007197"
-green = "0x587539"
-magenta = "0x9854f1"
-red = "0xf52a65"
-white = "0x6172b0"
-yellow = "0x8c6c3e"
+black = "0x24292f"
+red = "0xcf222e"
+green = "0x116329"
+yellow = "0x4d2d00"
+blue = "0x0969da"
+magenta = "0x8250df"
+cyan = "0x1b7c83"
+white = "0x6e7781"
 
 [colors.bright]
-black = "0xa1a6c5"
-blue = "0x2e7de9"
-cyan = "0x007197"
-green = "0x587539"
-magenta = "0x9854f1"
-red = "0xf52a65"
-white = "0x3760bf"
-yellow = "0x8c6c3e"
-
-[[colors.indexed_colors]]
-color = "0xb15c00"
-index = 16
-
-[[colors.indexed_colors]]
-color = "0xc64343"
-index = 17
+black = "0x57606a"
+red = "0xa40e26"
+green = "0x1a7f37"
+yellow = "0x633c01"
+blue = "0x218bff"
+magenta = "0xa475f9"
+cyan = "0x3192aa"
+white = "0x8c959f"

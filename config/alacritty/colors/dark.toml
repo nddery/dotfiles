@@ -1,31 +1,30 @@
+# Night Owl — matches the VS Code "Night Owl" theme.
+# tmux and other ANSI apps inherit these (tmux.conf is background-agnostic).
+
 [colors.primary]
-background = "0x24283b"
-foreground = "0xc0caf5"
+background = "0x011627"
+foreground = "0xd6deeb"
+
+[colors.cursor]
+cursor = "0x7e57c2"
+text = "0xffffff"
 
 [colors.normal]
-black = "0x1d202f"
-blue = "0x7aa2f7"
-cyan = "0x7dcfff"
-green = "0x9ece6a"
-magenta = "0xbb9af7"
-red = "0xf7768e"
-white = "0xa9b1d6"
-yellow = "0xe0af68"
+black = "0x011627"
+red = "0xef5350"
+green = "0x22da6e"
+yellow = "0xaddb67"
+blue = "0x82aaff"
+magenta = "0xc792ea"
+cyan = "0x21c7a8"
+white = "0xffffff"
 
 [colors.bright]
-black = "0x414868"
-blue = "0x7aa2f7"
-cyan = "0x7dcfff"
-green = "0x9ece6a"
-magenta = "0xbb9af7"
-red = "0xf7768e"
-white = "0xc0caf5"
-yellow = "0xe0af68"
-
-[[colors.indexed_colors]]
-color = "0xff9e64"
-index = 16
-
-[[colors.indexed_colors]]
-color = "0xdb4b4b"
-index = 17
+black = "0x575656"
+red = "0xef5350"
+green = "0x22da6e"
+yellow = "0xffeb95"
+blue = "0x82aaff"
+magenta = "0xc792ea"
+cyan = "0x7fdbca"
+white = "0xffffff"
