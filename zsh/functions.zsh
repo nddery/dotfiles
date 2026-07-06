@@ -144,21 +144,24 @@ function wt () {
   sesh connect "$dir"                                                                     # open a shell there — no Claude
 }
 
-# Remove a worktree created by wt and delete its branch — the cleanup half of
-# the workflow. Safe by default: git refuses if the worktree is dirty or the
-# branch is unmerged. Pass -f to force both. Runs from anywhere.
+# Remove a worktree created by wt, delete its branch, and close the sesh session
+# it opened — the cleanup half of the workflow. Safe by default: git refuses if
+# the worktree is dirty or the branch is unmerged. Pass -f to force both. Runs
+# from anywhere; with no <branch> it removes the worktree you're standing in.
 #
-# Usage: wtrm [<repo>] <branch> [-f]
+# Usage: wtrm [<repo>] [<branch>] [-f]
 function wtrm () {
-  local force=0 a root dir repo branch
+  local force=0 a root dir repo branch sesh_name
   local -a pos
   for a in "$@"; do
     if [[ "$a" == "-f" ]]; then force=1; else pos+=("$a"); fi
   done
   case ${#pos} in
+    0) branch=$(git symbolic-ref --short -q HEAD) \
+         || { print -u2 "wtrm: not on a branch here — name one: wtrm <branch>"; return 1; } ;;
     1) branch="$pos[1]" ;;
     2) repo="$pos[1]"; branch="$pos[2]" ;;
-    *) print -u2 "usage: wtrm [<repo>] <branch> [-f]"; return 1 ;;
+    *) print -u2 "usage: wtrm [<repo>] [<branch>] [-f]"; return 1 ;;
   esac
 
   root=$(_wt_repo_root "$repo")
@@ -168,13 +171,31 @@ function wtrm () {
   dir=$(git -C "$root" worktree list --porcelain | awk -v b="refs/heads/$branch" '
     /^worktree /{p=substr($0,10)} /^branch /{if($2==b){print p; exit}}')
   [[ -n "$dir" ]] || { print -u2 "wtrm: no worktree found for branch '$branch'"; return 1; }
+  [[ "$dir" != "$root" ]] || { print -u2 "wtrm: '$branch' is the main working tree — refusing to remove it"; return 1; }
+
+  # find the tmux session sesh opened here (match by path, like sesh-picker)
+  # before its directory disappears from under it
+  if command -v jq >/dev/null 2>&1; then
+    sesh_name=$(sesh list -t -j 2>/dev/null | jq -r --arg p "$dir" '.[] | select(.Path==$p) | .Name' 2>/dev/null)
+  fi
 
   # if we're standing inside it, step back to the main worktree first
   case "$PWD/" in "$dir"/*) cd "$root" ;; esac
 
+  local rc=0
   if (( force )); then
-    git -C "$root" worktree remove --force "$dir" && git -C "$root" branch -D "$branch"
+    git -C "$root" worktree remove --force "$dir" || return 1
+    git -C "$root" branch -D "$branch" || rc=$?
   else
-    git -C "$root" worktree remove "$dir" && git -C "$root" branch -d "$branch"
+    git -C "$root" worktree remove "$dir" || return 1
+    git -C "$root" branch -d "$branch" || rc=$?   # keeps the "unmerged" refusal visible
   fi
+
+  # close its sesh session last: killing it ends this shell if we ran from
+  # inside, and detach-on-destroy=off (tmux.conf) hops the client to another
+  # session — so wtrm doubles as "leave the worktree" in that case.
+  if [[ -n "$sesh_name" ]]; then
+    tmux kill-session -t "$sesh_name" 2>/dev/null
+  fi
+  return $rc
 }
