@@ -62,17 +62,24 @@ function _wt_repo_root () {
 }
 
 # Provision a freshly-created worktree the way `claude --worktree` does: symlink
-# large shared dirs (node_modules) from the main checkout, and copy the local /
-# gitignored files listed in .worktreeinclude (e.g. .env) into it.
+# every node_modules from the main checkout (at all levels — monorepo package
+# node_modules too), and copy the local / gitignored files listed in
+# .worktreeinclude (e.g. .env) into it.
 function _wt_provision () {
-  local root="$1" dir="$2" d f n=0
-  local -a link_dirs=(node_modules)
+  local root="$1" dir="$2" nm rel f n=0 m=0
 
-  for d in $link_dirs; do
-    if [[ -e "$root/$d" && ! -e "$dir/$d" ]]; then
-      ln -s "$root/$d" "$dir/$d" && print "wt: symlinked $d"
-    fi
-  done
+  # Symlink every node_modules in the main checkout to its counterpart in the
+  # worktree. -prune stops the scan descending INTO a node_modules, so nested
+  # store paths (node_modules/.pnpm/**/node_modules) are never returned and the
+  # scan stays bounded by the source tree. Whole-dir symlinks are correct for
+  # pnpm workspaces: a package's relative links resolve from the real location.
+  while IFS= read -r nm; do
+    rel="${nm#$root/}"
+    [[ -e "$dir/$rel" ]] && continue
+    mkdir -p "$dir/${rel:h}"
+    ln -s "$root/$rel" "$dir/$rel" && (( m++ ))
+  done < <(find "$root" -type d -name node_modules -prune)
+  (( m )) && print "wt: symlinked $m node_modules dir(s)"
 
   if [[ -f "$root/.worktreeinclude" ]]; then
     # untracked files matching .worktreeinclude patterns (tracked files aren't
@@ -93,8 +100,9 @@ function _wt_provision () {
 #
 # The worktree goes in a sibling <repo>.worktrees/<branch> directory (outside the
 # repo, so it never shows as untracked). Freshly-created worktrees are provisioned
-# like `claude --worktree`: node_modules is symlinked and .worktreeinclude files
-# are copied. It's a plain git worktree, so you can still `cd` in and run claude.
+# like `claude --worktree`: every node_modules (all levels, incl. monorepo package
+# node_modules) is symlinked and .worktreeinclude files are copied. It's a plain
+# git worktree, so you can still `cd` in and run claude.
 #
 # Usage: wt [<repo>] <branch> [base-ref]
 #   <repo>      Path or zoxide-known name of the repo. Omit to use the current
