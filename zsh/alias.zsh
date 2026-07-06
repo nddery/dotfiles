@@ -1,7 +1,7 @@
 alias vimenc="vim -u ~/.vimrc.encrypted -x"
 alias rmds="find . -name '*.DS_Store' -type f -delete"
 
-alias ctags="`brew --prefix`/bin/ctags"
+alias ctags="/opt/homebrew/bin/ctags"
 alias mkdir='mkdir -p'
 
 alias la='ls -la'

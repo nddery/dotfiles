@@ -6,8 +6,14 @@ source $DOTFILES/zsh/completion.zsh
 source $DOTFILES/zsh/functions.zsh
 source $DOTFILES/zsh/history.zsh
 
-source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
-antidote load ${DOTFILES}/zsh/plugins.txt
+source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+# Static bundle: regenerate the flat plugin file only when plugins.txt changes,
+# then source it — much faster than running `antidote load` every startup.
+zbundle=$HOME/.zsh_plugins.zsh
+if [[ ! $zbundle -nt ${DOTFILES}/zsh/plugins.txt ]]; then
+  antidote bundle <${DOTFILES}/zsh/plugins.txt >| $zbundle
+fi
+source $zbundle
 
 if [ -f ~/.zshlocalrc ]; then
   source ~/.zshlocalrc
