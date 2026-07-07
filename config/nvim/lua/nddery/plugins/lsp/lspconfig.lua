@@ -73,7 +73,11 @@ return {
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
 					vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-					vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+					-- NOTE: signature_help on <C-i>, NOT <C-k> — <C-k> is the global
+					-- nvim-tmux-navigation "move up a split" key (global.lua). <C-i>
+					-- shadows the built-in jumplist-forward in LSP buffers; Ghostty's
+					-- kitty keyboard protocol keeps it distinct from <Tab>.
+					vim.keymap.set("n", "<C-i>", vim.lsp.buf.signature_help, bufopts)
 					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
 					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
 					vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
