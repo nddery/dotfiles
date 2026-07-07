@@ -131,20 +131,22 @@ function wt () {
 
   dir="${root}.worktrees/${branch}"
 
+  # always sync with origin first: remote branches (incl. ones pushed since our last
+  # fetch) become discoverable and up to date, and the default branch is fresh for new
+  # branches. No-op when offline — the checks below just fall back to whatever's local.
+  git -C "$root" fetch --quiet origin 2>/dev/null
+
   if [[ -d "$dir" ]]; then
     print "wt: worktree already exists → $dir"
   elif git -C "$root" show-ref --quiet --verify "refs/heads/$branch"; then
     git -C "$root" worktree add "$dir" "$branch" || return 1                              # existing local branch
     created=1
   elif git -C "$root" show-ref --quiet --verify "refs/remotes/origin/$branch"; then
-    git -C "$root" worktree add --track -b "$branch" "$dir" "origin/$branch" || return 1  # existing remote branch
+    git -C "$root" worktree add --track -b "$branch" "$dir" "origin/$branch" || return 1  # branch on origin
     created=1
   else
-    if [[ -z "$base" ]]; then                                                             # new branch off a fresh default branch
-      base=$(git -C "$root" symbolic-ref -q --short refs/remotes/origin/HEAD 2>/dev/null) || base="origin/main"
-      git -C "$root" fetch --quiet origin "${base#origin/}" 2>/dev/null
-    fi
-    git -C "$root" worktree add -b "$branch" --no-track "$dir" "$base" || return 1
+    [[ -n "$base" ]] || base=$(git -C "$root" symbolic-ref -q --short refs/remotes/origin/HEAD 2>/dev/null) || base="origin/main"
+    git -C "$root" worktree add -b "$branch" --no-track "$dir" "$base" || return 1        # brand-new branch off origin default
     created=1
   fi
 
