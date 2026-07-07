@@ -28,6 +28,7 @@ brew "tmux"
 brew "sesh"
 brew "wget"
 brew "zoxide"      # smarter cd (z/zi); also feeds directory entries to sesh
+brew "glow"       # markdown viewer
 
 # --- Editors & language servers ---
 brew "neovim"
@@ -39,9 +40,8 @@ brew "lua-language-server"
 cask "firefox"
 cask "google-chrome"
 
-cask "alacritty"
+cask "ghostty"
 cask "appcleaner"
-cask "dash"
 cask "fork"
 cask "monitorcontrol"
 cask "postman"
@@ -52,14 +52,12 @@ cask "vlc"
 
 # --- QuickLook plugins ---
 cask "qlcolorcode"
-cask "qlimagesize"
 cask "qlmarkdown"
 cask "qlprettypatch"
 cask "qlstephen"
 cask "quicklook-csv"
-cask "quicklook-json"
 
 # --- Fonts (homebrew/cask-fonts is deprecated; fonts live in homebrew/cask) ---
 # Nerd Font build — provides the "CaskaydiaCove Nerd Font" family that
-# alacritty.toml (and the nvim/tmux glyph icons) rely on.
+# the ghostty config (and the nvim/tmux glyph icons) rely on.
 cask "font-caskaydia-cove-nerd-font"

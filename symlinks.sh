@@ -41,8 +41,8 @@ main() {
   done
 
   # setup XDG config directory and configs
-  mkdir -p $HOME/.config/alacritty
-  link "$(pwd)/config/alacritty" "$HOME/.config/alacritty"
+  mkdir -p $HOME/.config/ghostty
+  link "$(pwd)/config/ghostty" "$HOME/.config/ghostty"
 
   mkdir -p $HOME/.config/nvim
   link "$(pwd)/config/nvim" "$HOME/.config/nvim"

@@ -9,8 +9,15 @@ function change_color_scheme () {
   # gsed edit-in-place on a symlinked config file: replace <regex> in <file>.
   local edit=(gsed -i --follow-symlinks)
 
-  $edit "s|colors/.*\.toml|colors/$mode.toml|" \
-    "$HOME/.config/alacritty/alacritty.toml"
+  $edit "s|config-file = themes/.*|config-file = themes/$mode|" \
+    "$HOME/.config/ghostty/config"
+
+  # Ghostty has no live config reload, so nudge it via its reload_config keybind
+  # (default ⌘⇧,), but only when we're actually inside Ghostty. Needs Ghostty to
+  # have macOS Accessibility permission the first time (System Settings prompt).
+  if [[ "$TERM_PROGRAM" == "ghostty" ]] && command -v osascript >/dev/null; then
+    osascript -e 'tell application "System Events" to keystroke "," using {command down, shift down}' 2>/dev/null
+  fi
 
   $edit "s/vim.opt.background = \".*\"/vim.opt.background = \"$mode\"/" \
     "$HOME/.config/nvim/lua/nddery/plugins/colorscheme.lua"
