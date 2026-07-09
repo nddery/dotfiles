@@ -116,6 +116,27 @@ function _wt_deps_ready () {
   return 1
 }
 
+# Background worker: install deps in the worktree, then post a tmux status
+# message to the worktree's sesh session. The session is resolved by path at
+# completion (the same match sesh-picker/wtrm use), so it works even though the
+# session may not exist yet when the job is launched; if none is found the
+# message goes to the active client instead. Runs synchronously — the caller
+# backgrounds it.
+function _wt_install_worker () {
+  local dir="$1" branch="$2" log="$3" msg dur sess
+  if (cd "$dir" && ni) >"$log" 2>&1; then
+    msg="wt: ✓ deps ready — $branch"; dur=4000
+  else
+    msg="wt: ✗ ni failed — $branch — see $log"; dur=6000
+  fi
+  sess=$(sesh list -t -j 2>/dev/null | jq -r --arg p "$dir" '.[] | select(.Path==$p) | .Name' 2>/dev/null)
+  if [[ -n "$sess" ]]; then
+    tmux display-message -d "$dur" -t "$sess" "$msg" 2>/dev/null
+  else
+    tmux display-message -d "$dur" "$msg" 2>/dev/null
+  fi
+}
+
 # Create a git worktree for a repo and open a sesh session in it — no Claude.
 #
 # The worktree goes in a sibling <repo>.worktrees/<branch> directory (outside the
