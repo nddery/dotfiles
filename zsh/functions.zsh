@@ -103,6 +103,19 @@ function _wt_provision () {
   fi
 }
 
+# True when $1 (a worktree dir) is a node project we can auto-install: it has a
+# package.json AND a recognized lockfile. The lockfile requirement is deliberate
+# — `ni` with no lockfile can prompt for which package manager to use, which
+# would hang a non-interactive background job.
+function _wt_deps_ready () {
+  local dir="$1" lf
+  [[ -f "$dir/package.json" ]] || return 1
+  for lf in pnpm-lock.yaml package-lock.json yarn.lock bun.lockb; do
+    [[ -f "$dir/$lf" ]] && return 0
+  done
+  return 1
+}
+
 # Create a git worktree for a repo and open a sesh session in it — no Claude.
 #
 # The worktree goes in a sibling <repo>.worktrees/<branch> directory (outside the
