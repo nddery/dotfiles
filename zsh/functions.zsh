@@ -130,7 +130,7 @@ function _wt_install_worker () {
 # Guard + launch. If the worktree is an installable node project, kick off
 # `_wt_install_worker` in a disowned subshell that inherits this shell's
 # functions and PATH/volta context (so `ni` resolves the worktree's pinned
-# Node). `&!` disows it so `wt` returns immediately. Not a node project → no-op.
+# Node). `&!` disowns it so `wt` returns immediately. Not a node project → no-op.
 function _wt_install_deps () {
   local dir="$1" branch="$2" log
   _wt_deps_ready "$dir" || return 0
