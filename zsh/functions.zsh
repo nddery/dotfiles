@@ -68,31 +68,18 @@ function _wt_repo_root () {
   git -C "$cand" worktree list --porcelain 2>/dev/null | awk '/^worktree /{print substr($0,10); exit}'
 }
 
-# Provision a freshly-created worktree the way `claude --worktree` does: symlink
-# every node_modules from the main checkout (at all levels — monorepo package
-# node_modules too), and copy the local / gitignored files listed in
-# .worktreeinclude (e.g. .env) into it.
+# Provision a freshly-created worktree: copy the local / gitignored files listed
+# in .worktreeinclude (e.g. .env) into it, then kick off a background `ni` so the
+# worktree gets its OWN node_modules (a real directory, not a shared symlink) —
+# dependency changes stay local to the worktree.
 function _wt_provision () {
-  local root="$1" dir="$2" nm rel f n=0 m=0
+  local root="$1" dir="$2" branch="$3" f n=0
 
-  # Symlink every node_modules in the main checkout to its counterpart in the
-  # worktree. -prune stops the scan descending INTO a node_modules, so nested
-  # store paths (node_modules/.pnpm/**/node_modules) are never returned and the
-  # scan stays bounded by the source tree. Whole-dir symlinks are correct for
-  # pnpm workspaces: a package's relative links resolve from the real location.
-  while IFS= read -r nm; do
-    rel="${nm#$root/}"
-    [[ -e "$dir/$rel" ]] && continue
-    mkdir -p "$dir/${rel:h}"
-    ln -s "$root/$rel" "$dir/$rel" && (( m++ ))
-  done < <(find "$root" -type d -name node_modules -prune)
-  (( m )) && print "wt: symlinked $m node_modules dir(s)"
-
+  # Copy the untracked files matching .worktreeinclude that are ALSO gitignored
+  # (like Claude) — so provisioned files never show as untracked and don't block
+  # wtrm's safe removal later. Done first, so anything an install/postinstall
+  # step reads (e.g. .env) is in place before deps install.
   if [[ -f "$root/.worktreeinclude" ]]; then
-    # untracked files matching .worktreeinclude patterns (tracked files aren't
-    # listed, so they're never duplicated). Copy only the ones that are also
-    # gitignored — like Claude — so provisioned files never show as untracked
-    # and don't block `wtrm`'s safe removal later.
     while IFS= read -r f; do
       [[ -z "$f" ]] && continue
       git -C "$root" check-ignore -q -- "$f" || continue
@@ -101,6 +88,9 @@ function _wt_provision () {
     done < <(git -C "$root" ls-files --others --ignored --exclude-from="$root/.worktreeinclude")
     (( n )) && print "wt: copied $n file(s) from .worktreeinclude"
   fi
+
+  # Then install deps for this worktree in the background.
+  _wt_install_deps "$dir" "$branch"
 }
 
 # True when $1 (a worktree dir) is a node project we can auto-install: it has a
@@ -137,13 +127,25 @@ function _wt_install_worker () {
   fi
 }
 
+# Guard + launch. If the worktree is an installable node project, kick off
+# `_wt_install_worker` in a disowned subshell that inherits this shell's
+# functions and PATH/volta context (so `ni` resolves the worktree's pinned
+# Node). `&!` disows it so `wt` returns immediately. Not a node project → no-op.
+function _wt_install_deps () {
+  local dir="$1" branch="$2" log
+  _wt_deps_ready "$dir" || return 0
+  log="${TMPDIR:-/tmp}/wt-install-${branch//\//-}.log"
+  print "wt: installing deps in the background → $log"
+  { _wt_install_worker "$dir" "$branch" "$log"; } &!
+}
+
 # Create a git worktree for a repo and open a sesh session in it — no Claude.
 #
 # The worktree goes in a sibling <repo>.worktrees/<branch> directory (outside the
 # repo, so it never shows as untracked). Freshly-created worktrees are provisioned
-# like `claude --worktree`: every node_modules (all levels, incl. monorepo package
-# node_modules) is symlinked and .worktreeinclude files are copied. It's a plain
-# git worktree, so you can still `cd` in and run claude.
+# like `claude --worktree`: .worktreeinclude files are copied and dependencies are
+# installed in the background (each worktree gets its own node_modules). It's a
+# plain git worktree, so you can still `cd` in and run claude.
 #
 # Usage: wt [<repo>] <branch> [base-ref]
 #   <repo>      Path or zoxide-known name of the repo. Omit to use the current
@@ -191,7 +193,7 @@ function wt () {
     created=1
   fi
 
-  (( created )) && _wt_provision "$root" "$dir"
+  (( created )) && _wt_provision "$root" "$dir" "$branch"
   sesh connect "$dir"                                                                     # open a shell there — no Claude
 }
 
