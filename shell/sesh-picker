@@ -133,15 +133,15 @@ while true; do
   line=$(
     "$self" --list tmux | fzf \
       --ansi --no-sort --no-hscroll --layout=reverse --border --delimiter '\t' --with-nth 2 \
-      --border-label ' sesh ' --prompt '⚡ ' \
+      --border-label ' sessions ' \
       --pointer "$ptr" --gutter ' ' --color 'current-bg:-1,current-fg:-1' \
       --header "$header" \
       --bind 'tab:down,btab:up' \
       --bind 'ctrl-l:execute-silent(tmux select-pane -R)' \
       --bind "f5:transform($set_ptr)+reload($reload_current)" \
-      --bind "ctrl-a:change-prompt(🌐 )+reload($self --list all)" \
-      --bind "ctrl-t:change-prompt(🪟 )+reload($self --list tmux)" \
-      --bind "ctrl-g:change-prompt(⚙  )+reload($self --list config)" \
+      --bind "ctrl-a:reload($self --list all)" \
+      --bind "ctrl-t:reload($self --list tmux)" \
+      --bind "ctrl-g:reload($self --list config)" \
       "${extra_binds[@]}"
   ) || break
   name=${line%%$'\t'*}
