@@ -21,3 +21,10 @@ if [[ ! -f "$zcompnode" || -n "$(find "$zcompnode" -mtime +7 2>/dev/null)" ]]; t
   } >| "$zcompnode" 2>/dev/null
 fi
 source "$zcompnode"
+
+# Socket Firewall (MDM-deployed /etc/zshrc.d/sfw.zsh) aliases pnpm/npm/yarn/etc.
+# to `sfw <tool>`. Since COMPLETE_ALIASES is off, zsh expands the alias before
+# completing, so `pnpm run <tab>` would complete the command `sfw` (which has no
+# completions) and fall back to listing files. Treat sfw as a precommand wrapper
+# so the wrapped tool's own completion is used instead.
+(( $+commands[sfw] )) && compdef _precommand sfw
